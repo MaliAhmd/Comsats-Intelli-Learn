@@ -1,0 +1,429 @@
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="tutor-dashboard.css">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/css/bootstrap.min.css" rel="stylesheet">
+        <title>Tutor Dashbaord</title>
+    </head>
+    <body>
+        <div class="container-fluid">
+            <div class="navigation">
+                <ul>
+                    <li>
+                        <a href="#">
+                            <span class="icon"><ion-icon name="school-outline"></ion-icon></span>
+                            <span class="title">COMSATS Intelli-learn</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" data-section="home">
+                            <span class="icon"><ion-icon name="home-outline"></ion-icon></span>
+                            <span class="title">Home</span>
+                        </a>
+                    </li>
+                    <li class="bootstrap-style">
+                        <a href="#" data-section="manageTutors">
+                            <span class="icon"><ion-icon name="person-outline"></ion-icon></span>
+                            <span class="title">Verify Account</span>
+                        </a>
+                    </li class="bootstrap-style">
+                    <li>
+                        <a href="#" data-section="manageUsers">
+                            <span class="icon"><ion-icon name="settings-outline"></ion-icon></span>
+                            <span class="title">Account Setting</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="" id="signoutLink">
+                            <span class="icon"><ion-icon name="log-out-outline"></ion-icon></span>
+                            <span class="title">Signout</span>
+                        </a>
+                    </li>
+                </ul>
+            </div> 
+            <div class="main">
+                <div class="topbar">
+                    <div class="toggle">
+                        <ion-icon name="menu-outline"></ion-icon>
+                    </div>
+                    <p class="p">Tutor DASHBAORD</p>
+            </div>
+            <!----cards --> 
+
+            <div class="cardBox">
+                <div class="card">
+                    <div>
+                    <div class="numbers">Basic Info</div>
+                    <div class="cardName">Details</div>
+                </div>
+                <div class="iconBx">
+                    <ion-icon name="today-outline"></ion-icon>
+                </div>
+            </div>
+            <div class="card">
+                <div>
+                <div class="numbers">Arrange Class</div>
+                <div class="cardName">Meeting</div>
+            </div>
+            <div class="iconBx">
+                <ion-icon name="calendar-outline"></ion-icon>
+            </div>
+        </div>
+        <div class="card">
+            <div>
+            <div class="numbers">Join Class</div>
+            <div class="cardName">Now</div>
+        </div>
+        <div class="iconBx">
+            <ion-icon name="calendar-number-outline"></ion-icon>
+        </div>
+    </div>
+    <div class="card">
+        <div>
+        <div class="numbers">Total Student</div>
+        <div class="cardName">15</div>
+    </div> 
+        <div class="iconBx">
+            <ion-icon name="calendar-clear-outline"></ion-icon>
+        </div>
+    </div>
+            
+
+            <!-- Card Content Divs -->
+            <div class="content hidden basicInfoDiv">
+                <h2>Basic Info</h2>
+                <p>This is the basic information content.</p>
+            </div>
+
+            <div class="content hidden arrangeMeetingDiv">
+                <h2>Arrange Meeting</h2>
+                <p>This is the arrange meeting content.</p>
+            </div>
+
+            <div class="content hidden joinClassDiv">
+                <h2>Join Class</h2>
+                <p>This is the join class content.</p>
+            </div>
+
+            <div class="content hidden totalStudentsDiv">
+                <h2>Total Students</h2>
+                <p>This is the total students content.</p>
+            </div>
+        </div>
+        <!-- verify account code here -->
+        <div class="verifyaccounts hidden">
+            <div class="container light-style flex-grow-1 container-p-y">
+                <h4 class="font-weight-bold">
+                    Account settings
+                </h4>
+                <div class="card overflow-hidden">
+                    <div class="col-md-9 mx-auto">
+                        <div class="tab-content">
+                            <div class="card-body">
+                                <form action="/saveVerifyInfo" method="POST" enctype="multipart/form-data">
+                                    <div class="form-group">
+                                        <label class="form-label">Name</label>
+                                        <input type="text" class="form-control tutor-name" name="tutor_name"  value="">
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label">E-mail</label>
+                                        <input type="text" class="form-control mb-1 tutor-email" name="tutor_email" value="">
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label">Bio</label>
+                                        <textarea class="form-control bio" rows="5" name="bio"></textarea>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label">Birthday</label>
+                                        <input type="date" class="form-control bir" name="birthday" value="">
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label">Country</label>
+                                        <select class="custom-select country" name="country">
+                                            <option>USA</option>
+                                            <option>Pakistan</option>
+                                            <option>UK</option>
+                                            <option>Germany</option>
+                                            <option>France</option>
+                                        </select>
+                                    </div>
+                                   
+                                    <div class="form-group">
+                                        <label class="form-label">Phone</label>
+                                        <input type="number" class="form-control phno" name="phone_no" value="">
+                                    </div>
+                                    <div id="toggleUploadField">
+                                    <div class="form-group">
+                                        <label class="form-label">Resume</label>
+                                        <input type="file" class="form-control-file res-file" name="resume">
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label">Matric</label>
+                                        <input type="file" class="form-control-file metric-file" name="matric">
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label">Intermediate</label>
+                                        <input type="file" class="form-control-file inter-file" name="intermediate">
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label">Bachelors</label>
+                                        <input type="file" class="form-control-file bac-file" name="bachelors">
+                                    </div>
+                                    <div class="text-right mt-3">
+                                        <button type="submit"onclick="submitForm()" class="btn btn-primary">Save changes</button>&nbsp;
+                                        <button type="button" class="btn btn-default">Cancel</button>
+                                    </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        
+
+        <!-- account settting code here -->
+        <div class="accountsetttings hidden">
+            <div class="container light-style flex-grow-1 container-p-y">
+                <h4 class="font-weight-bold">
+                    Account settings
+                </h4>
+                <div class="card overflow-hidden">
+                    <div class="row no-gutters row-bordered row-border-light">
+                        <div class="col-md-3 pt-0">
+                            <div class="list-group list-group-flush account-settings-links">
+                                <a class="list-group-item list-group-item-action active" data-toggle="list"
+                                    href="#account-general">General</a>
+                                <a class="list-group-item list-group-item-action" data-toggle="list"
+                                    href="#account-change-password">Change password</a>
+                                <a class="list-group-item list-group-item-action" data-toggle="list"
+                                    href="#account-info">Info</a>
+                            </div>
+                        </div>
+                        <div class="col-md-9">
+                            <div class="tab-content">
+                                <div class="tab-pane fade active show" id="account-general">
+                                    <div class="card-body media align-items-center">
+                                        <img src="https://bootdey.com/img/Content/avatar/avatar1.png" alt
+                                            class="d-block ui-w-80">
+                                        <div class="media-body ml-4">
+                                            <label class="btn btn-outline-primary">
+                                                Upload new photo
+                                                <input type="file" class="account-settings-fileinput">
+                                            </label> &nbsp;
+                                            <button type="button" class="btn btn-default md-btn-flat">Reset</button>
+                                            <div class="text-black small mt-1">Allowed JPG, GIF or PNG. Max size of 800K</div>
+                                        </div>
+                                    </div>
+                                    <hr class="border-light m-0">
+                                    <div class="card-body">
+                                        <!-- <div class="form-group">
+                                            <label class="form-label">Registration No.</label>
+                                            <input type="text" class="form-control mb-1" value="">
+                                        </div> -->
+                                        <div class="form-group">
+                                            <label class="form-label">Name</label>
+                                            <input type="text" class="form-control" value="Nelle Maxwell">
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="form-label">E-mail</label>
+                                            <input type="text" class="form-control mb-1" value="nmaxwell@mail.com"> 
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="tab-pane fade" id="account-change-password">
+                                    <div class="card-body pb-2">
+                                        <div class="form-group">
+                                            <label class="form-label">Current password</label>
+                                            <input type="password" class="form-control">
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="form-label">New password</label>
+                                            <input type="password" class="form-control">
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="form-label">Repeat new password</label>
+                                            <input type="password" class="form-control">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="tab-pane fade" id="account-info">
+                                    <div class="card-body pb-2">
+                                        <div class="form-group">
+                                            <label class="form-label">Bio</label>
+                                            <textarea class="form-control"
+                                                rows="5">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris nunc arcu, dignissim sit amet sollicitudin iaculis, vehicula id urna. Sed luctus urna nunc. Donec fermentum, magna sit amet rutrum pretium, turpis dolor molestie diam, ut lacinia diam risus eleifend sapien. Curabitur ac nibh nulla. Maecenas nec augue placerat, viverra tellus non, pulvinar risus.</textarea>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="form-label">Birthday</label>
+                                            <input type="text" class="form-control" value="May 3, 1995">
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="form-label">Country</label>
+                                            <select class="custom-select">
+                                                <option>USA</option>
+                                                <option selected>Pakistan</option>
+                                                <option>UK</option>
+                                                <option>Germany</option>
+                                                <option>France</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <hr class="border-light m-0">
+                                    <div class="card-body pb-2">
+                                        <h6 class="mb-4">Contacts</h6>
+                                        <div class="form-group">
+                                            <label class="form-label">Phone</label>
+                                            <input type="text" class="form-control" value="+0 (123) 456 7891">
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                <div class="text-right mt-3">
+                    <button type="button" class="btn btn-primary">Save changes</button>&nbsp;
+                    <button type="button" class="btn btn-default">Cancel</button>
+                </div>
+            </div>
+            </div>  
+        </div>
+    </div>
+    <script src="tutor.js"></script>
+    <!-- <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script> -->
+    <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+    <script>
+        function toggleSection(sectionName) {
+                const verifyaccounts = document.querySelector('.verifyaccounts');
+                const accountsettings = document.querySelector('.accountsetttings');
+                const cardBox = document.querySelector('.cardBox');
+                const basicInfoDiv = document.querySelector('.basicInfoDiv');
+                const arrangeMeetingDiv = document.querySelector('.arrangeMeetingDiv');
+                const joinClassDiv = document.querySelector('.joinClassDiv');
+                const totalStudentsDiv = document.querySelector('.totalStudentsDiv');
+
+                if (sectionName === 'manageTutors') {
+                    verifyaccounts.classList.remove('hidden');
+                    accountsettings.classList.add('hidden');
+                    cardBox.classList.add('hidden');
+                } else if (sectionName === 'manageUsers') {
+                    verifyaccounts.classList.add('hidden');
+                    accountsettings.classList.remove('hidden');
+                    cardBox.classList.add('hidden');
+                } else if (sectionName === 'home') {
+                    verifyaccounts.classList.add('hidden');
+                    accountsettings.classList.add('hidden');
+                    cardBox.classList.remove('hidden');
+                } else if (sectionName === 'basicInfo') {
+                    basicInfoDiv.classList.toggle('hidden');
+                    arrangeMeetingDiv.classList.add('hidden');
+                    joinClassDiv.classList.add('hidden');
+                    totalStudentsDiv.classList.add('hidden');
+                } else if (sectionName === 'arrangeMeeting') {
+                    basicInfoDiv.classList.add('hidden');
+                    arrangeMeetingDiv.classList.toggle('hidden');
+                    joinClassDiv.classList.add('hidden');
+                    totalStudentsDiv.classList.add('hidden');
+                } else if (sectionName === 'joinClass') {
+                    basicInfoDiv.classList.add('hidden');
+                    arrangeMeetingDiv.classList.add('hidden');
+                    joinClassDiv.classList.toggle('hidden');
+                    totalStudentsDiv.classList.add('hidden');
+                } else if (sectionName === 'totalStudents') {
+                    basicInfoDiv.classList.add('hidden');
+                    arrangeMeetingDiv.classList.add('hidden');
+                    joinClassDiv.classList.add('hidden');
+                    totalStudentsDiv.classList.toggle('hidden');
+                }
+            }
+
+            // Event listener for navigation clicks
+            const navigationLinks = document.querySelectorAll('.navigation li a');
+            navigationLinks.forEach(link => {
+                link.addEventListener('click', function (event) {
+                    event.preventDefault();
+                    const sectionName = this.getAttribute('data-section');
+                    toggleSection(sectionName);
+                });
+            });
+
+            // Toggle functionality for menu
+            let toggle = document.querySelector('.toggle');
+            let navigation = document.querySelector('.navigation');
+            let main = document.querySelector('.main');
+
+            toggle.onclick = function () {
+                navigation.classList.toggle('active');
+                main.classList.toggle('active');
+            };
+
+            // Function to highlight hovered links
+            let list = document.querySelectorAll('.navigation li');
+            function activateLink() {
+                list.forEach(item => item.classList.remove('hovered'));
+                this.classList.add('hovered');
+            }
+            list.forEach(item => item.addEventListener('mouseover', activateLink));
+
+            // Event listeners for card clicks
+            document.querySelector('.card:nth-child(1)').addEventListener('click', function () {
+                toggleSection('basicInfo');
+            });
+            document.querySelector('.card:nth-child(2)').addEventListener('click', function () {
+                toggleSection('arrangeMeeting');
+            });
+            document.querySelector('.card:nth-child(3)').addEventListener('click', function () {
+                toggleSection('joinClass');
+            });
+            document.querySelector('.card:nth-child(4)').addEventListener('click', function () {
+                toggleSection('totalStudents');
+            });
+
+           
+            document.addEventListener('DOMContentLoaded', function() {
+            const signoutLink = document.getElementById('signoutLink');
+
+                if (signoutLink) {
+                signoutLink.addEventListener('click', function(event) {
+                event.preventDefault(); // Prevent the default link behavior
+
+                fetch('/tutor-logout', {
+                    method: 'GET',
+                })
+                .then(response => {
+                    // console.log('Logout request sent successfully');
+                    window.location.href = '/public/tutor/t_index.html'; // Redirect after logout
+                })
+                .catch(error => {
+                    console.error('Error sending logout request:', error);
+                });
+            });
+        } else {
+            console.error('Signout link not found');
+        }
+    });
+
+            document.addEventListener('DOMContentLoaded', function() {
+            const toggleUploadField = document.getElementById('toggleUploadField');
+
+            if (toggleUploadField) {
+                toggleUploadField.addEventListener('click', function() {
+                    const uploadField = document.getElementById('uploadDocumentSection');
+                    uploadField.style.display = (uploadField.style.display === 'none') ? 'block' : 'none';
+                });
+            } else {
+                console.error('Element with ID "toggleUploadField" not found.');
+            }
+        });
+        </script>
+    </body>
+    </html>

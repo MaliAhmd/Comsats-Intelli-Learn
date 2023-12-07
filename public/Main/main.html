@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-" crossorigin="anonymous" />
+    <link rel="stylesheet" href="boxicons/boxicons.min.css">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <!-- Link Swiper's CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.css"/>
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="/public/Main/style.css">
+    <link rel="icon" type="image/png" href="logo.jpg">
+    <title>COMSATS IntelliLearn</title>
+</head>
+<body>
+  <nav class="nav">
+    <div class="nav-logo">
+      <div>
+        <p>COMSATS IntelliLearn</p>
+      </div>
+      <div>
+          <button class="toggle-button" id="tbtn">
+            <i class="fa-solid fa-bars" style="color: rgba(255, 255, 255, 0.9);"></i> <!-- You might need to adjust the icon based on your preferences -->
+          </button>
+      </div> 
+    </div>
+    <div class="nav-menu" id="navMenu">
+        <ul>
+            <li><a href="#" class="link" onclick="scrollToSection('home')">Home</a></li>
+            <li><a href="#" class="link" onclick="scrollToSection('services')">Services</a></li>
+            <li><a href="#" class="link" onclick="scrollToSection('about')">About</a></li>
+        </ul>
+    </div>
+    <div class="button-group">
+        <button onclick="goToStudentPage()">Student</button>
+        <button onclick="goToTutorPage()">Tutor</button>
+        <button onclick="goToAdminPage()">Admin</button>
+    </div>
+    
+</nav>
+<div class="wrapper">
+<div class="swiper-container-wrapper">
+            <section id="home" class="swiper mySwiper">
+
+              <div class="swiper-wrapper">
+
+                <div class="card swiper-slide">
+                  <div class="card__image">
+                    <img src="public/Main/ractor.jpg" alt="card image">
+                  </div>
+
+                  <div class="card__content">
+                    <span class="card__title">Rector</span>
+                    <span class="card__name">PROF. DR. SAJID QAMAR</span>
+                    <p class="card__text">I feel honored to lead the COMSATS University Islamabad (CUI) as Rector and share with you my vision for CUI, which has always been an innovative institution of learning and development. Our focus in the coming years will be to transform CUI to meet the challenges of a rapidly changing technological environment.</p>
+                  </div>
+                </div>
+
+                <div class="card swiper-slide">
+                  <div class="card__image">
+                    <img src="public/Main/director.png" alt="card image">
+                  </div>
+
+                  <div class="card__content">
+                    <span class="card__title">Director</span>
+                    <span class="card__name">Prof. Dr. Muhammad Abid</span>
+                    <p class="card__text">With the entire world shrunk into an approachable neighborhood, with the ever-changing values and with the emergence of fresh realms of appropriate training and knowledge has turned to be a pre-requisite for all successful individuals as well as organizations. </p>
+                  </div>
+                </div>
+
+                <div class="card swiper-slide">
+                  <div class="card__image">
+                    <img src="public/Main/cshod.jpg" alt="card image">
+                  </div>
+
+                  <div class="card__content">
+                    <span class="card__title">Prof./HOD</span>
+                    <span class="card__name">Prof. Dr. Muhammad Abid</span>
+                    <p class="card__text">With the entire world shrunk into an approachable neighborhood, with the ever-changing values and with the emergence of fresh realms of appropriate training and knowledge has turned to be a pre-requisite for all successful individuals as well as organizations. </p>
+                  </div>
+                </div>
+
+                <div class="card swiper-slide">
+                  <div class="card__image">
+                    <img src="public/Main/faisalbut.jpg" alt="card image">
+                  </div>
+
+                  <div class="card__content">
+                    <span class="card__title">Assistant Professor</span>
+                    <span class="card__name">Dr. Faisal Shafique Butt</span>
+                    <p class="card__text">With the entire world shrunk into an approachable neighborhood, with the ever-changing values and with the emergence of fresh realms of appropriate training and knowledge has turned to be a pre-requisite for all successful individuals as well as organizations. </p>
+                  </div>
+                </div>
+              </div>
+            </section> 
+</div>
+
+<div class="section">
+<div id="services" class="services-section">
+  <div class="inner-width">
+      <h1 class="section-title">Our Services </h1>
+      <div class="border"></div>
+      <div class="services-container">
+          <!-- Your service boxes HTML code here -->
+          <div class="services-container">
+            <div class="service-box">
+                <div class="service-icon">
+                <i class="fa fa-paint-brush">  </i>
+                </div>
+                <div class="service-title"> Service Name </div>
+                <div class="service-desc">
+                   Here's a description of the Service Name 
+                </div>
+            </div>
+
+
+            <div class="service-box">
+                <div class="service-icon">
+                <i class="fas fa-code">   </i>
+                </div>
+                <div class="service-title"> Service Name </div>
+                <div class="service-desc">
+                    Here's a description of the Service Name
+                </div>
+            </div>
+
+
+            <div class="service-box">
+                <div class="service-icon">
+                <i class="fas fa-brush">   </i>
+                </div>
+                <div class="service-title"> Service Name </div>
+                <div class="service-desc">
+                    Here's a description of the Service Name 
+                </div>
+            </div>
+
+
+            <div class="service-box">
+                <div class="service-icon">
+                  <i class="fa-solid fa-certificate"></i>
+                </div>
+                <div class="service-title"> Service Name </div>
+                <div class="service-desc">
+                    Here's a description of the Service Name 
+                </div>
+            </div>
+            <div class="service-box">
+                <div class="service-icon">
+                <i class="fas fa-database">   </i>
+                </div>
+                <div class="service-title"> Service Name </div>
+                <div class="service-desc">
+                    Here's a description of the Service Name 
+                </div>
+            </div>
+
+
+            <div class="service-box">
+                <div class="service-icon">
+                <i class="fab fa-android">   </i>
+                </div>
+                <div class="service-title"> Service Name </div>
+                <div class="service-desc">
+                    Here's a description of the Service Name  
+                </div>
+            </div>
+         </div>
+      </div>
+  </div>
+</div>
+</div>
+
+
+<div class="container">
+  <div id="about" class="services-section1">
+    <!-- Introduction Row -->
+    <h1 class="my-4">About Us</h1>
+    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sint, explicabo dolores ipsam aliquam inventore corrupti eveniet quisquam quod totam laudantium repudiandae obcaecati ea consectetur debitis velit facere nisi expedita vel?</p>
+
+    <!-- Team Members Row -->
+    <div class="team-members">
+      <div class="team-member">
+        <img class="rounded-circle" src="public/Main/ali1.png" alt="Ali">
+        <h3 style="color: rgba(255, 255, 255, 0.9);">Ali
+          <small>(Backend Developer)</small>
+        </h3>
+        
+      </div>
+      <div class="team-member">
+        <img class="rounded-circle" src="public/Main/isha2.png" alt="Isha">
+        <h3 style="color: rgba(255, 255, 255, 0.9);">Isha Malik
+          <small>(Frontend Developer)</small>
+        </h3>
+        
+      </div>
+      <!-- Repeat similar blocks for other team members -->
+    </div>
+  </div>
+</div>
+<!-- /.container -->
+
+<!-- Footer -->
+<footer>
+  <div id="about" class="services-section2">
+  <p>&copy; Comsats IntelliLearn 2023</p>
+</div>
+</footer>
+</div>
+
+<script>
+  function scrollToSection(sectionId) {
+    const section = document.getElementById(sectionId);
+    section.scrollIntoView({ behavior: 'smooth' });
+  }
+  // // Add smooth scrolling from mouse wheel
+  // document.addEventListener("wheel", (event) => {
+  //   if (event.deltaY > 0) {
+  //     // Scrolling down
+  //     scrollToSection('services');
+  //   } else {
+  //     // Scrolling up
+  //     scrollToSection('home');
+  //   }
+  // });
+  
+
+</script>
+
+  <!-- Swiper JS -->
+  <script src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script>
+  <!-- Initialize Swiper -->
+  <script src="public/Main/script.js"></script>
+  <script>
+  function goToStudentPage() {
+    // Redirect to the student page
+    window.location.href = "/public/student/s_index.html";
+    
+  }
+  function goToTutorPage() {
+    // Redirect to the student page
+    window.location.href = "/public/tutor/t_index.html";
+    
+  }
+  function goToAdminPage() {
+    // Redirect to the student page
+    window.location.href = "/public/admin/a_index.html";
+    
+  }
+</script>
+</body>
+</html>
