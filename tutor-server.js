@@ -1,7 +1,15 @@
-// const {app}=require("./app")
-const session = require('express-session');
+const express = require('express');
+const app = express();
 const bcrypt = require('bcrypt');
 const mysql = require('mysql2');
+const jwt=require('jsonwebtoken')
+const auth = require('./Middleware/auth')
+const cors = require('cors')
+const multer = require('multer');
+const path = require('path');
+const fs = require('fs');
+
+
 module.exports = (app) =>{
     const tutorPool = mysql.createPool({
         connectionLimit: 10,
@@ -10,12 +18,12 @@ module.exports = (app) =>{
         password: '',
         database: 'fyp'
     });
-app.use(session({
-    secret: 'tutor-secret-key',
-    resave: false,
-    saveUninitialized: true
-}));
 
+    app.use(cors({
+        origin:'http://localhost:5000',
+        credentials:true,   
+    }));
+    app.use('/documents', express.static(path.join(__dirname, 'public/documents')));
 app.post('/tutor-register', async (req, res) => {
     const { tutor_name, tutor_subject, tutor_email, tutor_password } = req.body;
 
@@ -44,7 +52,6 @@ app.post('/tutor-register', async (req, res) => {
                 return res.status(500).json({ error: 'Registration failed' });
             }
             console.log('Tutor registered successfully');
-            req.session.tutor = true;
             res.redirect('/public/tutor/t_index.html');
         });
     } catch (error) {
@@ -75,15 +82,20 @@ app.post('/tutor-login', async (req, res) => {
 
         const tutor = result[0];
         const hashedPassword = tutor.tutor_password;
-
+        let token
         try {
             // Compare the entered password with the stored hash
             const passwordMatch = await bcrypt.compare(tutor_password, hashedPassword);
 
             if (passwordMatch) {
                 console.log('Tutor logged in successfully');
-                req.session.tutor = true;
-                res.redirect('/tutor/tutor-dashboard.html');
+                token= await jwt.sign(
+                    {id:tutor.id,email:tutor_email},
+                    "Comsats_Intelli-learn",
+                    {expiresIn: '1h'}
+                  )
+                  res.status(200).json({result,token})
+                // res.redirect('/tutor/tutor-dashboard.html');
             } else {
                 res.status(401).json({ error: 'Invalid credentials' });
             }
@@ -96,28 +108,26 @@ app.post('/tutor-login', async (req, res) => {
 
 app.get('/tutor-logout', (req, res) => {
      // Check if the user is authenticated (if a session exists)
-     if (req.session) {
-        // Destroy the session to log the user out
-        req.session.destroy((err) => {
-            if (err) {
-                console.error('Error destroying session:', err);
-                res.status(500).json({ error: 'Logout failed' });
-            } else {
-                console.log('Logout Successfully')
-                // Redirect to the login page or send a success response
-                res.redirect('/public/tutor/t_index.html'); // You can replace '/login' with the actual login page URL
-            }
-        });
-    } else {
-        // If there is no session, consider the user as already logged out
-        res.redirect('/public/tutor/t_index.html'); // You can replace '/login' with the actual login page URL
+     try{
+        res.status(200)
+        .cookie('token',null,{expires: new Date(Date.now()),httpOnly:true,sameSite:'None',secure:true})
+        .json({
+            success:true,
+            message:"logout!"
+        })
+    }catch(error){
+        res.status(500).json({
+            success:false,
+            message:error.message
+        })
     }
 
 })
-app.get('/fetchTutorData', (req, res) => {
-    const query = 'SELECT tutor_name, tutor_email FROM tutor';
+app.get('/fetchTutorData/:id',auth,(req, res) => {
+    const fetchid=req.params.id;
+    const query = 'SELECT tutor_name, tutor_email FROM tutor where id=?';
 
-    tutorPool.query(query, (err, results) => {
+    tutorPool.query(query, [fetchid], (err, results) => {
         if (err) {
             console.error('Error fetching tutor data:', err);
             res.status(500).json({ error: 'Error fetching tutor data' });
@@ -127,22 +137,50 @@ app.get('/fetchTutorData', (req, res) => {
     });
 });
 
-app.post('/saveVerifyInfo', (req, res) => {
+const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        const tutorEmail = req.body.tutor_email;// Get tutor's email from the request
+        // console.log(tutorEmail);    
+         // Create folder if it doesn't exist
+         const folderPath = `./public/documents/${tutorEmail}`;
+         
+         // Create folder if it doesn't exist
+         if (!fs.existsSync(folderPath)) {
+             fs.mkdirSync(folderPath, { recursive: true });
+         }
+         
+         cb(null, folderPath);// Chang // Set the destination directory for uploaded files
+    },
+    filename: function (req, file, cb) {
+        const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
+        cb(null, uniqueSuffix + path.extname(file.originalname)); // Rename files with a unique name to avoid conflicts
+    }
+});
+const upload = multer({ storage: storage });
+app.post('/saveVerifyInfo', auth, upload.fields([
+    { name: 'resume_file', maxCount: 1 }, // Assuming 'resume_file' is the field name for resume file upload
+    { name: 'matrix_file', maxCount: 1 },
+    { name: 'intermediate_file', maxCount: 1 },
+    { name: 'bachelors_file', maxCount: 1 }
+]), (req, res) => {
     const {
         tutor_name,
         tutor_email,
         bio,
         birthday,
         country,
-        phone_no,
-        resume_file,
-        matrix_file,
-        intermediate_file,
-        bachelors_file
+        phone_no
     } = req.body;
-    // console.log(req.body)
+
+    // Access uploaded files from req.files object
+    const resume_file = req.files['resume_file'][0].filename;
+    const matrix_file = req.files['matrix_file'][0].filename;
+    const intermediate_file = req.files['intermediate_file'][0].filename;
+    const bachelors_file = req.files['bachelors_file'][0].filename;
+
+    // Proceed with database insertion as you were doing
     const insertQuery =
-        'INSERT INTO verifytutor (name, email, bio, birthday, country, phone_no, resume_file, matrix_file, intermediate_file, bachelors_file) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)';
+        'INSERT INTO verifytutor (name, email, bio, birthday, country, phone_no, resume_file, matrix_file, intermediate_file, bachelors_file, tutorid) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)';
     const values = [
         tutor_name,
         tutor_email,
@@ -153,9 +191,9 @@ app.post('/saveVerifyInfo', (req, res) => {
         resume_file,
         matrix_file,
         intermediate_file,
-        bachelors_file
+        bachelors_file,
+        req.user.id
     ];
-
     tutorPool.query(insertQuery, values, (err, results) => {
         if (err) {
             console.error('Error saving verify info:', err);
@@ -165,4 +203,121 @@ app.post('/saveVerifyInfo', (req, res) => {
         res.json({ message: 'Data saved to verifyinfo successfully' });
     });
 });
+
+
+app.get('/fetchTutorverifyinfo',auth, (req, res) => {
+    const id = req.user.id
+    const query = 'SELECT bio, birthday,country,phone_no,resume_file,matrix_file,intermediate_file,bachelors_file FROM verifytutor where tutorId = ?';
+
+    tutorPool.query(query,[id],(err, results) => {
+        if (err) {
+            console.error('Error fetching tutor verify data:', err);
+            res.status(500).json({ error: 'Error fetching tutor verify data' });
+            return;
+        }
+        res.json(results);
+    });
+});
+
+// app.get('/getFiles/:id',auth,(req,res)=>{
+//     const id = req.params.id
+//     const query = 'SELECT * FROM verifytutor WHERE tutorId = ?'
+//     tutorPool.query(query,[id],(err, results) => {
+//         if (err) {
+//             console.error('Error fetching tutor verify data:', err);
+//             res.status(500).json({ error: 'Error fetching tutor verify data' });
+//             return;
+//         }
+//         console.log(results)
+//         res.json(results);
+//     });
+// })
+
+app.get('/getFiles/:id', auth, (req, res) => {
+    // const id = req.user.id;
+    const id = req.params.id;
+    const query = 'SELECT bio, birthday, country, phone_no, resume_file, matrix_file, intermediate_file, bachelors_file FROM verifytutor WHERE tutorId = ?';
+
+    tutorPool.query(query, [id], (err, results) => {
+        if (err) {
+            console.error('Error fetching tutor verify data:', err);
+            res.status(500).json({ error: 'Error fetching tutor verify data' });
+            return;
+        }
+
+        // Assuming results is an array containing the fetched data
+        if (results.length > 0) {
+            const tutorData = results[0]; // Considering only the first row
+
+            // Read file paths from the database query results
+            const resumeFilePath = path.join(__dirname, `public/documents/${req.user.email}/${tutorData.resume_file}`);
+            // const resumeFilePath = tutorData.resume_file;
+            const matrixFilePath = path.join(__dirname, `public/documents/${req.user.email}/${tutorData.matrix_file}`);
+            // const matrixFilePath = tutorData.matrix_file;
+            const intermediateFilePath = path.join(__dirname, `public/documents/${req.user.email}/${tutorData.intermediate_file}`);
+            // const intermediateFilePath = tutorData.intermediate_file;
+            const bachelorsFilePath = path.join(__dirname, `public/documents/${req.user.email}/${tutorData.bachelors_file}`);
+
+            // const bachelorsFilePath = tutorData.bachelors_file;
+
+            // Read file contents and send as response
+            const filesToSend = {};
+
+            // Read and send each file asynchronously
+            function readFileAndSend(filePath, fileName) {
+                fs.readFile(filePath, (err, fileData) => {
+                    if (err) {
+                        console.error(`Error reading file ${fileName}:`, err);
+                        filesToSend[fileName] = null;
+                    } else {
+                        filesToSend[fileName] = fileData;
+                    }
+
+                    // Check if all files have been read
+                    if (
+                        filesToSend.resume &&
+                        filesToSend.matrix &&
+                        filesToSend.intermediate &&
+                        filesToSend.bachelors
+                    ) {
+                        res.json(filesToSend); // Send all files as a response
+                    }
+                });
+            }
+
+            // Read and send each file
+            readFileAndSend(resumeFilePath, 'resume');
+            readFileAndSend(matrixFilePath, 'matrix');
+            readFileAndSend(intermediateFilePath, 'intermediate');
+            readFileAndSend(bachelorsFilePath, 'bachelors');
+        } else {
+            res.status(404).json({ error: 'Tutor data not found' });
+        }
+    });
+});
 }
+
+
+
+
+
+
+app.get('/documents/:tutorEmail/:filename', (req, res) => {
+    const tutorEmail = req.params.tutorEmail;
+    const filename = req.params.filename;
+    const filePath = path.join(__dirname, `public/documents/${tutorEmail}/${filename}`);
+
+    // Check if the file exists
+    fs.access(filePath, fs.constants.F_OK, (err) => {
+        if (err) {
+            console.error('File does not exist:', err);
+            return res.status(404).json({ error: 'File not found' });
+        }
+
+        // If the file exists, serve it
+        res.sendFile(filePath);
+    });
+});
+
+
+

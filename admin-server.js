@@ -1,6 +1,5 @@
 const mysql = require('mysql2');
-const session = require('express-session');
-
+const cors = require("cors")
 module.exports=(app)=>{
 
 const pool = mysql.createPool({
@@ -11,13 +10,10 @@ const pool = mysql.createPool({
     database: 'fyp'
 });
 
-app.use(session({
-    secret: 'admin-secret-key',
-    resave: false,
-    saveUninitialized: true
-}));
 // Serve admin-login.html as the default rout
-
+app.use(cors({
+    origin:'http://localhost:5000'
+}));
 app.post('/admin-login', (req, res) => {
     const { email, password } = req.body;
 
@@ -176,6 +172,18 @@ app.delete('/delete-tutor/:id', (req, res) => {
         });
     });
 
-
+    app.get('/approve-tutors-details', (req, res) => {
+        const query = 'SELECT  id,name, email, bio, birthday, country, phone_no, resume_file, matrix_file, intermediate_file, bachelors_file FROM verifytutor'; // Replace 'tutors' with your table name
+    
+        pool.query(query, (err, result) => {
+            if (err) {
+                console.error(err);
+                return res.status(500).json({ error: 'Failed to fetch tutor details' });
+            }
+    
+            // Assuming you have the result with tutor details
+            res.status(200).json(result); // Return the tutor details as JSON
+        });
+    });
 
 }

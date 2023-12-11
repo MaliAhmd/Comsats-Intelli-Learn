@@ -35,7 +35,7 @@
         <div class="form-box">
             <!-- login -->
             <div class="login-container" id="login">
-                <form action="http://localhost:5000/tutor-login" method="POST">
+                <form>
                     <div class="top">
                         <span>Don't have an account? <a href="#" onclick="register()">Register</a></span>
                         <header>Login</header>
@@ -49,8 +49,8 @@
                         <i class="bx bx-lock-alt"></i>
                     </div>
                     <div class="input-box">
-                        <input type="submit" class="submit" value="Login" name="login_submit">
-                    </div>
+                        <button class="submit submit_login" type="submit">Login</button>
+                    </div>                                        
                     <div class="two-col">
                         <div class="one">
                             <input type="checkbox" id="login-check">
@@ -133,6 +133,7 @@
             y.style.opacity = 1;
         }
     </script>
+    <script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
     <script src="tutor.js"></script>
 </body>
 

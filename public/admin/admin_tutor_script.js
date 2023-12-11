@@ -278,3 +278,39 @@ search.addEventListener("input", function() {
         }
     }
 });
+
+
+function fetchTutorDetails() {
+    fetch('/approve-tutors-details') // Replace this with your backend route
+        .then(response => response.json())
+        .then(data => {
+            const tableBody = document.getElementById('tableBody');
+            tableBody.innerHTML = ''; // Clear previous data
+            
+            data.forEach(tutor => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${tutor.id}</td>
+                    <td>${tutor.name}</td>
+                    <td>${tutor.email}</td>
+                    <td>${tutor.bio}</td>
+                    <td>${tutor.birthday}</td>
+                    <td>${tutor.country}</td>
+                    <td>${tutor.phone_no}</td>
+                    <td>${tutor.resume_file}</td>
+                    <td>${tutor.bachelors_file}</td>
+                    <td>${tutor.intermediate_file}</td>
+                    <td>${tutor.matrix_file}</td>
+                    <td><button class="btn btn-approve">Approve</button></td>
+                    <!-- Add other table data here based on your fetched columns -->
+                `;
+                tableBody.appendChild(row);
+            });
+        })
+        .catch(error => console.error('Error:', error));
+}
+
+// Call the function when the page loads
+document.addEventListener('DOMContentLoaded', function() {
+    fetchTutorDetails();
+});

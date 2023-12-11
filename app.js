@@ -3,21 +3,48 @@ const path = require('path');
 const mysql = require('mysql2');
 const bodyParser = require('body-parser');
 const crypto = require('crypto'); // Import the crypto module
-const session = require('express-session'); // Import the express-session module
 const bcrypt = require('bcrypt');
 const cookieParser = require('cookie-parser');
 const tutor_server = require('./tutor-server')
 const admin_server=require('./admin-server')
+const jwt=require('jsonwebtoken')
+const cors=require("cors")
+const cloudinary=require('cloudinary')
 const app = express();
-const port = process.env.PORT || 5000;
+const port = 5000;
 
-app.use(cookieParser());
+const corsOptions = {
+    origin:['http://localhost:5000'], 
+    credentials:true,        
+    optionSuccessStatus:200,
+    methods:["GET","POST","PUT","DELETE"]
+}
+app.use(cors({
+    origin:'http://localhost:5000'
+}));
+
 app.use(express.static('public'));
-
+app.use((req, res, next) => {
+    res.setHeader("Access-Control-Allow-Origin", "*");
+    res.setHeader(
+      "Access-Control-Allow-Headers",
+      "Origin, X-Requested-With, Content, Accept, Content-Type, Authorization"
+    );
+    res.setHeader(
+      "Access-Control-Allow-Methods",
+      "GET, POST, PUT, DELETE, PATCH, OPTIONS"
+    );
+    next();
+  });
 
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+app.use(express.json())
+app.use(cookieParser())
+app.use(cors(corsOptions))
+app.use(express.json({limit:'50mb'}))
+app.use(express.urlencoded({limit:'50mb', extended:true }))
 tutor_server(app)
 admin_server(app)
 const pool = mysql.createPool({
@@ -99,7 +126,7 @@ app.post('/login', async (req, res) => {
 
       const user = result[0];
       const hashedPassword = user.password;
-
+      let token
       try {
           // Compare the entered password with the stored hash
           const passwordMatch = await bcrypt.compare(password, hashedPassword);
@@ -107,9 +134,16 @@ app.post('/login', async (req, res) => {
           if (passwordMatch) {
               console.log('User logged in successfully');
               // Set a cookie upon successful login
-              res.cookie('user_auth', 'authenticated', { httpOnly: true });
+              console.log({id:user.id,reg:regno})
+              token= await jwt.sign(
+                {id:user.id,reg:regno},
+                "Comsats_Intelli-learn",
+                {expiresIn: '1h'}
+              )
+              res.status(200).json({result,token})
+            //   res.cookie('user_auth', 'authenticated', { httpOnly: true });
             //   res.status(200).json({ message: 'Login successful' });
-                res.redirect('/student/dashbaord.html')
+                // res.redirect('/student/dashbaord.html')
                 
           } else {
               res.status(401).json({ error: 'Invalid credentials' });
@@ -121,15 +155,9 @@ app.post('/login', async (req, res) => {
   });
 });
 
-const secretKey = crypto.randomBytes(64).toString('hex');
-console.log('Generated Secret Key:', secretKey); // Log the generated key (for debugging)
+// const secretKey = crypto.randomBytes(64).toString('hex');
+// console.log('Generated Secret Key:', secretKey); // Log the generated key (for debugging)
 
-// // Use express-session middleware for session management with the generated secret key
-// app.use(session({
-//     secret: secretKey, // Use the generated secret key for session encryption
-//     resave: false,
-//     saveUninitialized: false,
-// }));
 
 // Your other routes and middleware...
 app.use(express.static('public'));
@@ -156,7 +184,11 @@ app.get('/logout', (req, res) => {
         res.redirect('/public/student/s_index.html'); // You can replace '/login' with the actual login page URL
     }
 });
-
+// cloudinary.config({ 
+//     cloud_name: 'dqlbidkyx', 
+//     api_key: '977157985658271', 
+//     api_secret: 'g6tlACzfjxP1SUKvRuiA6d8bdgw' 
+//   });
 
 
 app.listen(port, () => console.log(`Listening on port ${port}`));

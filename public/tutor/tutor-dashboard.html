@@ -122,7 +122,7 @@
                     <div class="col-md-9 mx-auto">
                         <div class="tab-content">
                             <div class="card-body">
-                                <form action="/saveVerifyInfo" method="POST" enctype="multipart/form-data">
+                                <form class="data" enctype="multipart/form-data" id="verifyForm">
                                     <div class="form-group">
                                         <label class="form-label">Name</label>
                                         <input type="text" class="form-control tutor-name" name="tutor_name"  value="">
@@ -154,25 +154,28 @@
                                         <label class="form-label">Phone</label>
                                         <input type="number" class="form-control phno" name="phone_no" value="">
                                     </div>
-                                    <div id="toggleUploadField">
+                                    <div class="toggleUpload" id="toggleUploadField">
+                                        <label>Documents Upload</label>
+                                    </div>
+                                    <div id="uploadDocumentSection" style="display: none;"></div>
                                     <div class="form-group">
                                         <label class="form-label">Resume</label>
-                                        <input type="file" class="form-control-file res-file" name="resume">
+                                        <input type="file" class="form-control-file res-file" name="resume_file" accept=".pdf,.doc,.docx">
                                     </div>
                                     <div class="form-group">
                                         <label class="form-label">Matric</label>
-                                        <input type="file" class="form-control-file metric-file" name="matric">
+                                        <input type="file" class="form-control-file metric-file" name="matrix_file" accept=".pdf,.doc,.docx">
                                     </div>
                                     <div class="form-group">
                                         <label class="form-label">Intermediate</label>
-                                        <input type="file" class="form-control-file inter-file" name="intermediate">
+                                        <input type="file" class="form-control-file inter-file" name="intermediate_file" accept=".pdf,.doc,.docx">
                                     </div>
                                     <div class="form-group">
                                         <label class="form-label">Bachelors</label>
-                                        <input type="file" class="form-control-file bac-file" name="bachelors">
+                                        <input type="file" class="form-control-file bac-file" name="bachelors_file" accept=".pdf,.doc,.docx">
                                     </div>
                                     <div class="text-right mt-3">
-                                        <button type="submit"onclick="submitForm()" class="btn btn-primary">Save changes</button>&nbsp;
+                                        <button type="submit"  class="btn btn-primary verifySubmit">Save changes</button>&nbsp;
                                         <button type="button" class="btn btn-default">Cancel</button>
                                     </div>
                                     </div>
@@ -182,8 +185,8 @@
                     </div>
                 </div>
             </div>
-        </div>
         
+    
         
 
         <!-- account settting code here -->
@@ -227,46 +230,53 @@
                                         </div> -->
                                         <div class="form-group">
                                             <label class="form-label">Name</label>
-                                            <input type="text" class="form-control" value="Nelle Maxwell">
+                                            <input type="text" class="form-control tutor-namee" value="">
                                         </div>
                                         <div class="form-group">
                                             <label class="form-label">E-mail</label>
-                                            <input type="text" class="form-control mb-1" value="nmaxwell@mail.com"> 
+                                            <input type="text" class="form-control mb-1 tutor-emaill" value=""> 
                                         </div>
                                     </div>
                                 </div>
+                                
                                 <div class="tab-pane fade" id="account-change-password">
-                                    <div class="card-body pb-2">
-                                        <div class="form-group">
-                                            <label class="form-label">Current password</label>
-                                            <input type="password" class="form-control">
+                                    <form id="changePasswordForm" action="/changePassword" method="POST">
+                                        <div class="card-body pb-2">
+                                            <div class="form-group">
+                                                <label for="currentPassword" class="form-label">Current password</label>
+                                                <input type="password" id="currentPassword" name="currentPassword" class="form-control">
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="newPassword" class="form-label">New password</label>
+                                                <input type="password" id="newPassword" name="newPassword" class="form-control">
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="repeatNewPassword" class="form-label">Repeat new password</label>
+                                                <input type="password" id="repeatNewPassword" name="repeatNewPassword" class="form-control">
+                                            </div>
+                                            <!-- Submit button -->
+                                            <button type="submit" class="btn btn-primary">Change Password</button>
                                         </div>
-                                        <div class="form-group">
-                                            <label class="form-label">New password</label>
-                                            <input type="password" class="form-control">
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="form-label">Repeat new password</label>
-                                            <input type="password" class="form-control">
-                                        </div>
-                                    </div>
+                                    </form>
                                 </div>
+                                
+                                
                                 <div class="tab-pane fade" id="account-info">
                                     <div class="card-body pb-2">
                                         <div class="form-group">
-                                            <label class="form-label">Bio</label>
-                                            <textarea class="form-control"
-                                                rows="5">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris nunc arcu, dignissim sit amet sollicitudin iaculis, vehicula id urna. Sed luctus urna nunc. Donec fermentum, magna sit amet rutrum pretium, turpis dolor molestie diam, ut lacinia diam risus eleifend sapien. Curabitur ac nibh nulla. Maecenas nec augue placerat, viverra tellus non, pulvinar risus.</textarea>
+                                            <label class="form-label ">Bio</label>
+                                            <textarea class="form-control bi"
+                                                rows="5"></textarea>
                                         </div>
                                         <div class="form-group">
-                                            <label class="form-label">Birthday</label>
-                                            <input type="text" class="form-control" value="May 3, 1995">
+                                            <label class="form-label " >Birthday</label>
+                                            <input type="date" class="form-control birt" value="">
                                         </div>
                                         <div class="form-group">
-                                            <label class="form-label">Country</label>
-                                            <select class="custom-select">
+                                            <label class="form-label ">Country</label>
+                                            <select class="custom-select co">
                                                 <option>USA</option>
-                                                <option selected>Pakistan</option>
+                                                <option>Pakistan</option>
                                                 <option>UK</option>
                                                 <option>Germany</option>
                                                 <option>France</option>
@@ -277,8 +287,8 @@
                                     <div class="card-body pb-2">
                                         <h6 class="mb-4">Contacts</h6>
                                         <div class="form-group">
-                                            <label class="form-label">Phone</label>
-                                            <input type="text" class="form-control" value="+0 (123) 456 7891">
+                                            <label class="form-label ">Phone</label>
+                                            <input type="text" class="form-control ph" value="">
                                         </div>
                                     </div>
                                 </div>
@@ -295,7 +305,7 @@
             </div>  
         </div>
     </div>
-    <script src="tutor.js"></script>
+    
     <!-- <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script> -->
     <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/js/bootstrap.bundle.min.js"></script>
@@ -401,7 +411,9 @@
                 })
                 .then(response => {
                     // console.log('Logout request sent successfully');
+                    
                     window.location.href = '/public/tutor/t_index.html'; // Redirect after logout
+                    console.log(response)
                 })
                 .catch(error => {
                     console.error('Error sending logout request:', error);
@@ -412,18 +424,24 @@
         }
     });
 
-            document.addEventListener('DOMContentLoaded', function() {
-            const toggleUploadField = document.getElementById('toggleUploadField');
+    document.addEventListener('DOMContentLoaded', function() {
+    const toggleUploadField = document.getElementById('toggleUploadField');
+    const uploadField = document.getElementById('uploadDocumentSection');
 
-            if (toggleUploadField) {
-                toggleUploadField.addEventListener('click', function() {
-                    const uploadField = document.getElementById('uploadDocumentSection');
-                    uploadField.style.display = (uploadField.style.display === 'none') ? 'block' : 'none';
-                });
-            } else {
-                console.error('Element with ID "toggleUploadField" not found.');
-            }
+    if (toggleUploadField && uploadField) {
+        toggleUploadField.addEventListener('click', function() {
+            uploadField.style.display = (uploadField.style.display === 'none') ? 'block' : 'none';
         });
+    } else {
+        console.error('Elements not found.');
+    }
+});
+
+
         </script>
+        <script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
+        <script src="tutor.js"></script>
+        <script src="test.js"></script>
+
     </body>
     </html>

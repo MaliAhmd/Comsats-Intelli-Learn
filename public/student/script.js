@@ -42,3 +42,39 @@ function formatRegistrationNumber1() {
   // Set the formatted value back into the input field
   registrationInput1.value = formattedValue1.toUpperCase();
 }
+
+const submitBtn = document.querySelector('.submit');
+        submitBtn.addEventListener('click', async (e) => {
+            e.preventDefault(); // Prevents the default form submission
+            
+            const tutorEmail = document.getElementById('regno').value;
+            const tutorPassword = document.querySelector('input[name="password"]').value;
+
+            try {
+                const response = await fetch('http://localhost:5000/login', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    credentials: "include",
+                    withCredentials: true,  
+                    body: JSON.stringify({
+                        regno: tutorEmail,
+                        password: tutorPassword
+                    })
+                });
+                const data = await response.json();
+                console.log('Response data:', data);
+                // cookie.set("token",data.token)
+                // document.cookie = `token=${data.token}`
+                Cookies.set("token",`${data.token}`)
+                const tok = Cookies.get('token')
+                if(tok){
+                    window.location.href = '/student/dashbaord.html'
+                }
+                // response.redirect('/tutor/tutor-dashboard.html');
+            } catch (error) {
+                // Handle fetch error
+                console.error('Error:', error);
+            }
+        });
