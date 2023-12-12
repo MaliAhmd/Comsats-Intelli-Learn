@@ -295,6 +295,22 @@ app.get('/getFiles/:id', auth, (req, res) => {
         }
     });
 });
+
+
+app.get('/showstudenttotutor/:id',auth, (req, res) => {
+    const id = req.params.id;
+    const query = 'SELECT * FROM enrollstudent WHERE tutor_id = ? ';
+
+    tutorPool.query(query,[id], (err, result) => {
+        if (err) {
+            console.error(err);
+            return res.status(500).json({ error: 'Failed to show student to tutor' });
+        }
+
+        // Assuming you have the result with tutor details
+        res.status(200).json(result); // Return the tutor details as JSON
+    });
+});
 }
 
 
@@ -318,6 +334,7 @@ app.get('/documents/:tutorEmail/:filename', (req, res) => {
         res.sendFile(filePath);
     });
 });
+
 
 
 

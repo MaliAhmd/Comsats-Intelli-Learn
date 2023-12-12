@@ -64,7 +64,7 @@
         </div>
         <div class="card">
             <div>
-            <div class="numbers">Arrange Class</div>
+            <div class="numbers">join Class</div>
             <div class="cardName">Meeting</div>
         </div>
         <div class="iconBx">
@@ -73,7 +73,7 @@
     </div>
     <div class="card">
         <div>
-        <div class="numbers">Join Class</div>
+        <div class="numbers">Tutors Facility</div>
         <div class="cardName">Now</div>
     </div>
     <div class="iconBx">
@@ -89,7 +89,53 @@
         <ion-icon name="calendar-clear-outline"></ion-icon>
     </div>
 </div>
+
+ <!-- Card Content Divs -->
+ <div class="content hidden basicInfoDiv">
+    <h2>Basic Info</h2>
+    <p>This is the basic information content.</p>
 </div>
+
+<div class="content hidden arrangeMeetingDiv">
+    <h2>Arrange Meeting</h2>
+    <p>This is the arrange meeting content.</p>
+</div>
+
+<div class="content hidden joinClassDiv">
+    <table>
+        <thead>
+            <tr>
+                <td>Tutor Name</td>
+                <td>tutor Subject</td>
+                <td>Tutor Email</td>
+                <td>Remove</td>
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+    <h2>Enroll Tutor</h2>
+    <p> According to you</p>
+    <table>
+        <thead>
+            <tr>
+                <td>Tutor Name</td>
+                <td>tutor Subject</td>
+                <td>Tutor Email</td>
+                <td>Enroll</td>
+            </tr>
+        </thead>
+        <tbody id="tableBody">
+        </tbody>
+    </table>
+</div>
+
+<div class="content hidden totalStudentsDiv">
+    <h2>Total Students</h2>
+    <p>This is the total students content.</p>
+</div>
+</div>
+
 
 <!-- join meeting code -->
 <div class="joinmeeting hidden">
@@ -210,13 +256,18 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/js/bootstrap.bundle.min.js"></script>
 <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
 <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
+<script src="enroll.js"></script>
 <script>
 
 function toggleSection(sectionName) {
             const joinmeeting = document.querySelector('.joinmeeting');
             const accountsetttings = document.querySelector('.accountsetttings');
             const cardBox = document.querySelector('.cardBox');
-
+            const basicInfoDiv = document.querySelector('.basicInfoDiv');
+            const arrangeMeetingDiv = document.querySelector('.arrangeMeetingDiv');
+            const joinClassDiv = document.querySelector('.joinClassDiv');
+            const totalStudentsDiv = document.querySelector('.totalStudentsDiv');
 
             if (sectionName === 'joinmeeting') {
                 joinmeeting.classList.remove('hidden');
@@ -233,6 +284,26 @@ function toggleSection(sectionName) {
                 accountsetttings.classList.add('hidden');
                 cardBox.classList.remove('hidden');
                
+            }else if (sectionName === 'basicInfo') {
+                    basicInfoDiv.classList.toggle('hidden');
+                    arrangeMeetingDiv.classList.add('hidden');
+                    joinClassDiv.classList.add('hidden');
+                    totalStudentsDiv.classList.add('hidden');
+            } else if (sectionName === 'arrangeMeeting') {
+                    basicInfoDiv.classList.add('hidden');
+                    arrangeMeetingDiv.classList.toggle('hidden');
+                    joinClassDiv.classList.add('hidden');
+                    totalStudentsDiv.classList.add('hidden');
+            } else if (sectionName === 'joinClass') {
+                    basicInfoDiv.classList.add('hidden');
+                    arrangeMeetingDiv.classList.add('hidden');
+                    joinClassDiv.classList.toggle('hidden');
+                    totalStudentsDiv.classList.add('hidden');
+            } else if (sectionName === 'totalStudents') {
+                    basicInfoDiv.classList.add('hidden');
+                    arrangeMeetingDiv.classList.add('hidden');
+                    joinClassDiv.classList.add('hidden');
+                    totalStudentsDiv.classList.toggle('hidden');
             }
         }
 // Event listener for navigation clicks
@@ -262,6 +333,21 @@ function toggleSection(sectionName) {
             this.classList.add('hovered');
         }
         list.forEach(item => item.addEventListener('mouseover', activateLink));
+
+        // Event listeners for card clicks
+        document.querySelector('.card:nth-child(1)').addEventListener('click', function () {
+                toggleSection('basicInfo');
+            });
+            document.querySelector('.card:nth-child(2)').addEventListener('click', function () {
+                toggleSection('arrangeMeeting');
+            });
+            document.querySelector('.card:nth-child(3)').addEventListener('click', function () {
+                toggleSection('joinClass');
+            });
+            document.querySelector('.card:nth-child(4)').addEventListener('click', function () {
+                toggleSection('totalStudents');
+            });
+
         
         document.addEventListener('DOMContentLoaded', function() {
         const signoutLink = document.getElementById('signoutLink');
@@ -286,7 +372,32 @@ function toggleSection(sectionName) {
         });
     });
 });
+function showTutorDetails() {
+          fetch('/show-tutors-details') // Replace this with your backend route
+              .then(response => response.json())
+              .then(data => {
+                  const tableBody = document.getElementById('tableBody');
+                  tableBody.innerHTML = ''; // Clear previous data
+                  
+                  data.forEach(tutor => {
+                      const row = document.createElement('tr');
+                      row.innerHTML = `
+                          <td>${tutor.tutor_name}</td>
+                          <td>${tutor.tutor_subject}</td>
+                          <td>${tutor.tutor_email}</td>
+                          <td><button class="btn btn-approve"onClick="test(${tutor.id})">Enroll</button></td>
+                          <!-- Add other table data here based on your fetched columns -->
+                      `;
+                      tableBody.appendChild(row);
+                  });
+              })
+              .catch(error => console.error('Error:', error));
+      }
+document.addEventListener('DOMContentLoaded', function() {
+    showTutorDetails();
+    });
 
 </script>
+
 </body>
 </html>

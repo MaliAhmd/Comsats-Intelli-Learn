@@ -8,6 +8,7 @@ const cookieParser = require('cookie-parser');
 const tutor_server = require('./tutor-server')
 const admin_server=require('./admin-server')
 const jwt=require('jsonwebtoken')
+const auth=require('./Middleware/auth')
 const cors=require("cors")
 const cloudinary=require('cloudinary')
 const app = express();
@@ -94,7 +95,7 @@ app.post('/register', async (req, res) => {
               return res.status(500).json({ error: 'Registration failed' });
           }
           console.log('User registered successfully');
-          res.redirect('/public/student/s_index.html')
+        //   res.redirect('/public/student/s_index.html')
         //   res.status(200).json({ message: 'Registration successful' });
       });
   } catch (error) {
@@ -141,10 +142,6 @@ app.post('/login', async (req, res) => {
                 {expiresIn: '1h'}
               )
               res.status(200).json({result,token})
-            //   res.cookie('user_auth', 'authenticated', { httpOnly: true });
-            //   res.status(200).json({ message: 'Login successful' });
-                // res.redirect('/student/dashbaord.html')
-                
           } else {
               res.status(401).json({ error: 'Invalid credentials' });
           }
@@ -184,12 +181,63 @@ app.get('/logout', (req, res) => {
         res.redirect('/public/student/s_index.html'); // You can replace '/login' with the actual login page URL
     }
 });
+
+app.get('/show-tutors-details', (req, res) => {
+    const query = 'SELECT id, tutor_name, tutor_subject, tutor_email FROM tutor'; // Replace 'tutors' with your table name
+
+    pool.query(query, (err, result) => {
+        if (err) {
+            console.error(err);
+            return res.status(500).json({ error: 'Failed to fetch tutor details' });
+        }
+
+        // Assuming you have the result with tutor details
+        res.status(200).json(result); // Return the tutor details as JSON
+    });
+});
 // cloudinary.config({ 
 //     cloud_name: 'dqlbidkyx', 
 //     api_key: '977157985658271', 
 //     api_secret: 'g6tlACzfjxP1SUKvRuiA6d8bdgw' 
 //   });
+app.post('/studentdata',auth,async (req, res) => {
+    const { student_name, student_regno, student_email,tutor_id } = req.body;
 
+    try {
+        // Store the hashed password in the database
+        const sql = 'INSERT INTO enrollstudent (student_name, student_regno, student_email,tutor_id) VALUES (?, ?, ?,?)';
+        const values = [student_name, student_regno, student_email, tutor_id];
+
+        pool.query(sql, values, (err, result) => {
+            if (result) {
+                console.log('Student data save successfully');
+                return res.status(201).json({ message: 'Studentdata store successfully' });
+            }else{
+                console.error(err);
+                return res.status(500).json({ error: 'Studentdata failed to store' });
+            }
+            
+            // res.redirect('/public/tutor/t_index.html');
+        });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'failed' });
+    }
+});
+app.get('/show-student-details/:id', (req, res) => {
+    const id=req.params.id;
+    const query = 'SELECT id, CONCAT(firstname," ",lastname) AS Student_name ,regno ,email FROM users where id=?';
+
+    pool.query(query,[id], (err, result) => {
+        if (err) {
+            console.error(err);
+            return res.status(500).json({ error: 'Failed to fetch tutor details' });
+        }
+
+        // Assuming you have the result with tutor details
+        res.status(200).json(result); // Return the tutor details as JSON
+    });
+});
 
 app.listen(port, () => console.log(`Listening on port ${port}`));
 module.exports = {pool}

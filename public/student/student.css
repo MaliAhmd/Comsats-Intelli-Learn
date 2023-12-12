@@ -207,6 +207,35 @@ main.active{
     display: none;
 }
 
+.table{
+    position: relative;
+    width: 100%;
+    padding: 20px;
+}
+.set {
+    margin-top: 20px; /* Adjust the margin to create space between search bar and table */
+  }
+table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+.theader{
+    margin-top: 40px;
+}
+thead {
+    background-color: var(--blue);
+    color: var(--white);
+  }
+  
+thead tr {
+    border-bottom: 2px solid var(--white);
+  }
+  
+th, td {
+    padding: 12px 6px;
+    text-align: left;
+  }
+
 
 
 /* make it responsive*/
