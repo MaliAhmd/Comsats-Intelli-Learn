@@ -15,6 +15,10 @@
 body{
     min-height: 100vh;
     overflow-x: hidden;
+    background: url(nav.jpg);
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center bottom;
 }
 .container-fluid{
     position: relative;
@@ -24,11 +28,15 @@ body{
     position: fixed;
     width: 300px;
     height: 100%;
-    background: var(--blue);
-    border-left: 20px solid var(--blue);
+    background: linear-gradient(rgba(39, 39, 39, 0.4), rgba(39, 39, 39, 0.4));
     transition: 0.5s;
     overflow: hidden;
     margin-left: -15px;
+
+        background: url(nav.jpg);
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center bottom;
 }
 .navigation.active{
     width: 80px;
@@ -36,7 +44,7 @@ body{
 .navigation ul{
     position: absolute;
     top: 0;
-    left: 0;
+    left: 11px;
     width: 100%;
 }
 .navigation ul li{
@@ -68,7 +76,7 @@ body{
 .navigation ul li:hover a,
 .navigation ul li.hovered a
 {
-    color: var(--blue);
+    color: #000;
 }
 .navigation ul li a .icon{
     position: relative;
@@ -77,6 +85,10 @@ body{
     height: 6opx;
     line-height: 70px;
     text-align: center;
+}
+.navigation-active{
+    width: 95% !important;
+    left: 80px !important;
 }
 .navigation ul li a .icon ion-icon{
     font-size: 1.75em;
@@ -126,6 +138,11 @@ body{
     left: 300px;
     min-height: 100vh;
     background: var(--white);
+    background: url(bg111.jpg);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center bottom;
+    /* backdrop-filter: blur(4px); */
     transition: 0.5s;
 }
 main.active{
@@ -171,7 +188,7 @@ main.active{
 }
 .cardBox .card{
     position: relative;
-    background: var(--white);
+    background: linear-gradient(rgba(39, 39, 39, 0.4), rgba(39, 39, 39, 0.4));
     padding: 30px;
     border-radius: 20px;
     display: flex;
@@ -183,25 +200,25 @@ main.active{
     position: relative;
     font-weight: 400;
     font-size: 1.5em;
-    color: var(--blue);
+    color: white;
 }
 .cardBox .card .cardName{
-    color: var(--black2);
+    color: white;
     font-size: 15px;
     margin-top: 5px;
 }
 .cardBox .card .iconBx{
     font-size: 2.5em;   
-    color: var(--black2);
+    color: white;
 }
 .cardBox .card:hover{
-    background: var(--blue);
+    background: linear-gradient(rgba(39, 39, 39, 0.4), rgba(39, 39, 39, 0.4));
 }
 .cardBox .card:hover .numbers,
 .cardBox .card:hover .cardName,
 .cardBox .card:hover .iconBx
 {
-    color: var(--white);
+    color: var(--black1);
 }
 .hidden {
     display: none;
@@ -286,7 +303,22 @@ h4.font-weight-bold {
 .switcher-label {
     color: var(--black2);
 }
-
+table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+.theader{
+    margin-top: 40px;
+}
+  
+thead tr {
+    border-bottom: 2px solid var(--white);
+  }
+  
+th, td {
+    padding: 12px 6px;
+    text-align: left;
+  }
 
 
 /* make it responsive*/

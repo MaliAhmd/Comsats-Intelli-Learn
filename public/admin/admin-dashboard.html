@@ -5,7 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Dashbaord</title>
     <link rel="stylesheet" href="admin-dashbaord.css">
+    <link rel="icon" type="image/png" href="logo.jpg">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous"> -->
 </head>
 <body>
     <div class="container">
@@ -114,7 +117,7 @@
         <div class="set">
         <div class="table">
             <div class="theader">
-                <h2>Manage Tutors Account</h2>
+                <h2 style="color: #000; margin-bottom: 15px;"> Manage Tutors Account</h2>
                 <div class="search">
                     <label>
                     <input type="text" id="search" placeholder="Search here">
@@ -122,7 +125,7 @@
                     </label>
                 </div>
                 <table id="tutorsearch">
-                    <thead>
+                    <thead style=" background: linear-gradient(rgba(39, 39, 39, 0.4), rgba(39, 39, 39, 0.4));">
                         <tr>
                             <td>Id</td>
                             <td>Tutor Name</td>
@@ -132,30 +135,30 @@
                             <td>delete</td>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody style="background-color: #fff">
                     </tbody>
                 </table>
             </div>
         </div>
     </div>
-    <div class="update-form hidden">
-    <h2>Update Tutor</h2>
+    <div class="update-form hidden" style="padding: 10px;">
+    <h2 style="padding: 10px;">Update Tutor</h2>
     <form id="updateTutorForm">
-        <div>
+        <div style="padding: 10px;">
             <label for="updateTutorName">Tutor Name:</label>
-            <input type="text" id="updateTutorName" name="updateTutorName" required>
+            <input type="text" id="updateTutorName" name="updateTutorName" required style="padding: 6px;">
         </div>
-        <div>
+        <div style="padding: 10px;">
             <label for="updateTutorSubject">Tutor Subject:</label>
-            <input type="text" id="updateTutorSubject" name="updateTutorSubject" required>
+            <input type="text" id="updateTutorSubject" name="updateTutorSubject" required style="padding: 6px;">
         </div>
-        <div>
+        <div style="padding: 10px;">
             <label for="updateTutorEmail">Tutor Email:</label>
-            <input type="email" id="updateTutorEmail" name="updateTutorEmail" required>
+            <input type="email" id="updateTutorEmail" name="updateTutorEmail" required style="padding: 6px;">
         </div>
-        <div>
-            <button type="submit" id="updateTu">Update Tutor</button>
-            <button type="button" class="btn-cancel-update">Cancel</button>
+        <div style="padding: 10px;">
+            <button type="submit" id="updateTu" style="padding: 6px;">Update Tutor</button>
+            <button type="button" class="btn-cancel-update" style="padding: 6px;">Cancel</button>
         </div>
     </form>
 </div>
@@ -164,7 +167,7 @@
         <div class="set">
             <div class="table">
                 <div class="theader">
-                    <h2>Approve Tutors Account</h2>
+                    <h2 style="color: #000; margin-bottom: 15px;">Approve Tutors Account</h2>
                     <div class="search">
                         <label>
                         <input type="text" placeholder="Search here">
@@ -172,7 +175,7 @@
                         </label>
                     </div>
                     <table>
-                        <thead>
+                        <thead style=" background: linear-gradient(rgba(39, 39, 39, 0.4), rgba(39, 39, 39, 0.4));">
                             <tr>
                                 <td>Id</td>
                                 <td>Tutor Name</td>
@@ -188,7 +191,7 @@
                                 <td>Approve Now</td>
                             </tr>
                         </thead>
-                        <tbody id="tableBody">
+                        <tbody id="tableBody" style="background-color: #fff;">
                         </tbody>
                     </table>
                 </div>
@@ -205,7 +208,7 @@
     <div class="set">
         <div class="table">
             <div class="theader">   
-                <h2>Manage User Account</h2>
+                <h2 style="color: #000; margin-bottom: 15px;">Manage User Account</h2>
                 <div class="search1">
                     <label>
                     <input type="text" id="searchh" placeholder="Search here">
@@ -213,7 +216,7 @@
                     </label>
                 </div>
                 <table id="userSearchTable">
-                    <thead>
+                    <thead style=" background: linear-gradient(rgba(39, 39, 39, 0.4), rgba(39, 39, 39, 0.4));">
                         <tr>
                             <td>Id</td>
                             <td>Firstname</td>
@@ -224,7 +227,7 @@
                             <td>delete</td>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody style="background-color: #fff;">
                     </tbody>
                 </table>
             </div>
@@ -234,23 +237,23 @@
 <div class="update-user-form">
     <h2>Update User</h2>
     <form id="updateUserForm">
-        <div>
+        <div class="p-3">
             <label for="updateUserFirstname">First Name:</label>
             <input type="text" id="updateUserFirstname" name="updateUserFirstname" required>
         </div>
-        <div>
+        <div class="p-3">
             <label for="updateUserLastname">Last Name:</label>
             <input type="text" id="updateUserLastname" name="updateUserLastname" required>
         </div>
-        <div>
+        <div class="p-3">
             <label for="updateUserRegno">Registration No.:</label>
             <input type="text" id="updateUserRegno" name="updateUserRegno" required>
         </div>
-        <div>
+        <div class="p-3">
             <label for="updateUserEmail">Email:</label>
             <input type="email" id="updateUserEmail" name="updateUserEmail" required>
         </div>
-        <div>
+        <div class="p-3">
             <button type="submit" id="updateUserBtn">Update User</button>
             <button type="button" class="btn-cancel-update">Cancel</button>
         </div>
@@ -262,6 +265,7 @@
     <script src="visit-graph.js" defer></script>
     <script src="admin_tutor_script.js"></script>
     <script src="admin_user_script.js"></script>
+    <script src="adminScript.js"></script>
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 </body>

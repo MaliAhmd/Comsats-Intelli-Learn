@@ -173,7 +173,7 @@ app.delete('/delete-tutor/:id', (req, res) => {
     });
 
     app.get('/approve-tutors-details', (req, res) => {
-        const query = 'SELECT  id,name, email, bio, birthday, country, phone_no, resume_file, matrix_file, intermediate_file, bachelors_file FROM verifytutor'; // Replace 'tutors' with your table name
+        const query = 'SELECT  id,name, email, bio, birthday, country, phone_no, resume_file, matrix_file, intermediate_file, bachelors_file FROM verifytutor where id = 1'; // Replace 'tutors' with your table name
     
         pool.query(query, (err, result) => {
             if (err) {

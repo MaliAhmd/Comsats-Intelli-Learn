@@ -24,7 +24,10 @@ const getTutorData = async () => {
         document.querySelector('.tutor-emaill').value = res[0].tutor_email
         document.querySelector('.tutor-name').value = res[0].tutor_name
         document.querySelector('.tutor-email').value = res[0].tutor_email
-       
+        
+        document.querySelector(".user_name").innerHTML = res[0].tutor_name
+        document.querySelector(".user_email").innerHTML = res[0].tutor_email
+
     } catch (error) {
         console.error('Error fetching tutor data:', error);
     }
@@ -50,13 +53,18 @@ const getTutorVerifyDetails = async () => {
         }
 
         const res = await response.json();
-        console.log(res[0])
+        // console.log(res[0])
         const date = res[0].birthday
         document.querySelector(".bi").value=res[0].bio;
         document.querySelector(".birt").value=date.split("T")[0];
         document.querySelector(".co").value=res[0].country;
         document.querySelector(".ph").value=res[0].phone_no;
        
+        document.querySelector(".user_bio").innerHTML = res[0].bio
+        document.querySelector(".user_dof").innerHTML = date.split("T")[0];
+        document.querySelector('.user_country').innerHTML = res[0].country;
+        document.querySelector('.user_contact').innerHTML = res[0].phone_no;
+
     } catch (error) {
         console.error('Error fetching tutor data:', error);
     }

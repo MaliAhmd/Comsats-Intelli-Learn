@@ -69,7 +69,9 @@ document.addEventListener('DOMContentLoaded', function() {
         .then(response => {
             // console.log('Logout request sent successfully');
             window.location.href = '/public/tutor/t_index.html'; // Redirect after logout
-            
+            toastr.success('in COMSATS Intelli-Learn','Please fill in all fields')
+            Cookies.remove('token');
+            console.log(response)
         })
         .catch(error => {
             console.error('Error sending logout request:', error);
@@ -146,6 +148,16 @@ document.addEventListener('DOMContentLoaded', function() {
         const matrix_file = document.querySelector('.metric-file').files[0];
         const intermediate_file = document.querySelector('.inter-file').files[0];
         const bachelors_file = document.querySelector('.bac-file').files[0];
+
+        // Validation checks
+        if (!tutor_name || !tutor_email || !bio || !birthday || !country || !phone_no || !resume_file || !matrix_file || !intermediate_file || !bachelors_file) {
+        
+        toastr.error('in COMSATS Intelli-Learn','Please fill in all fields')
+
+        console.error('Please fill in all fields');
+        // You might want to show an error message to the user indicating which fields are missing
+        return;
+    }
     
         const formData = new FormData();
         formData.append('tutor_name', tutor_name);
@@ -171,6 +183,7 @@ document.addEventListener('DOMContentLoaded', function() {
     
             if (response.ok) {
                 const result = await response.json();
+                toastr.success('in COMSATS Intelli-Learn','Your Data Save Successfully')
                 console.log('Data saved successfully:', result);
             } else {
                 throw new Error('Error saving data');

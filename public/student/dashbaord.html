@@ -6,6 +6,7 @@
     <title>Student Dashbaord</title>
     <link rel="stylesheet" href="student.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="icon" type="image/png" href="logo.jpg">
 </head>
 <body>
     <div class="container-fluid">
@@ -55,11 +56,11 @@
         <div class="cardBox">
             <div class="card">
                 <div>
-                <div class="numbers">Basic Info</div>
-                <div class="cardName">Details</div>
+                <div class="numbers">.....</div>
+                <div class="cardName">///</div>
             </div>
             <div class="iconBx">
-                <ion-icon name="today-outline"></ion-icon>
+                <!-- <ion-icon name="today-outline"></ion-icon> -->
             </div>
         </div>
         <div class="card">
@@ -68,28 +69,28 @@
             <div class="cardName">Meeting</div>
         </div>
         <div class="iconBx">
-            <ion-icon name="calendar-outline"></ion-icon>
+            <ion-icon name="add-circle-outline"></ion-icon>
         </div>
     </div>
     <div class="card">
         <div>
-        <div class="numbers">Tutors Facility</div>
-        <div class="cardName">Now</div>
+        <div class="numbers">.........</div>
+        <div class="cardName">////</div>
     </div>
     <div class="iconBx">
-        <ion-icon name="calendar-number-outline"></ion-icon>
+        <!-- <ion-icon name="calendar-number-outline"></ion-icon> -->
     </div>
 </div>
 <div class="card">
     <div>
-    <div class="numbers">Total Student</div>
-    <div class="cardName">15</div>
+    <div class="numbers">......</div>
+    <div class="cardName">///</div>
 </div> 
     <div class="iconBx">
         <ion-icon name="calendar-clear-outline"></ion-icon>
     </div>
 </div>
-
+        </div>
  <!-- Card Content Divs -->
  <div class="content hidden basicInfoDiv">
     <h2>Basic Info</h2>
@@ -97,13 +98,22 @@
 </div>
 
 <div class="content hidden arrangeMeetingDiv">
-    <h2>Arrange Meeting</h2>
-    <p>This is the arrange meeting content.</p>
+    <input type="text" id="meetingLink" class="input-field" style=" background: rgba(255, 255, 255, 0.7); padding: 8px;
+    margin: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px; width: 400px;" placeholder="Enter link to join Meeting">
+    <button type="submit" class="submit" style="color: black;  padding: 8px 16px;
+    margin: 5px;
+    border: none;
+    border-radius: 4px;
+    background-color: white;
+    color: black;
+    cursor: pointer;" id="loginButton">Join</button>
 </div>
-
-<div class="content hidden joinClassDiv">
-    <table>
-        <thead>
+</div>
+<div class="content hidden joinClassDiv" style="padding: 10px;">
+    <!-- <table>
+        <thead style="background: linear-gradient(rgba(39, 39, 39, 0.4), rgba(39, 39, 39, 0.4));">
             <tr>
                 <td>Tutor Name</td>
                 <td>tutor Subject</td>
@@ -113,11 +123,11 @@
         </thead>
         <tbody>
         </tbody>
-    </table>
+    </table> -->
     <h2>Enroll Tutor</h2>
-    <p> According to you</p>
+    <!-- <p> According to you</p> -->
     <table>
-        <thead>
+        <thead style="background: linear-gradient(rgba(39, 39, 39, 0.4), rgba(39, 39, 39, 0.4));">
             <tr>
                 <td>Tutor Name</td>
                 <td>tutor Subject</td>
@@ -125,7 +135,7 @@
                 <td>Enroll</td>
             </tr>
         </thead>
-        <tbody id="tableBody">
+        <tbody id="tableBody" style="background-color: #fff;">
         </tbody>
     </table>
 </div>
@@ -323,7 +333,7 @@ function toggleSection(sectionName) {
 
         toggle.onclick = function () {
             navigation.classList.toggle('active');
-            main.classList.toggle('active');
+            main.classList.toggle('navigation-active');
         };
 
         // Function to highlight hovered links
@@ -398,6 +408,16 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
 </script>
+<script>
+    document.getElementById('loginButton').addEventListener('click', function() {
+        var link = document.getElementById('meetingLink').value;
+        if (link !== '') {
+            window.open(link, '_blank');
+        } else {
+            alert('Please enter a link before clicking Login.');
+        }
+    });
+    </script>
 
 </body>
 </html>

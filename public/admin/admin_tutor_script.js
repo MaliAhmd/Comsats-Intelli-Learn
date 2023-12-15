@@ -41,7 +41,7 @@ let main = document.querySelector('.main');
 
 toggle.onclick = function () {
     navigation.classList.toggle('active');
-    main.classList.toggle('active');
+    main.classList.toggle('navigation-active');
 };
 
 // Function to highlight hovered links
@@ -227,7 +227,7 @@ fetch('/manage-tutors-details')
                         <td class="tutor-name">${tutor.tutor_name}</td>
                         <td class="tutor-subject">${tutor.tutor_subject}</td>
                         <td class="tutor-email">${tutor.tutor_email}</td>
-                        <td><button class="btn btn-update">Update</button></td>
+                        <td><button class="btn btn-update openDialogButton">Update</button></td>
                         <td><button class="btn btn-delete">Delete</button></td>
                     </tr>
                 `;
@@ -305,6 +305,7 @@ function fetchTutorDetails() {
                     <!-- Add other table data here based on your fetched columns -->
                 `;
                 tableBody.appendChild(row);
+
             });
         })
         .catch(error => console.error('Error:', error));

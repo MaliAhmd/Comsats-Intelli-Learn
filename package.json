@@ -17,6 +17,7 @@
     "open": "^9.1.0",
     "serve-static": "^1.15.0",
     "sors": "^1.0.2",
+    "toastr": "^2.1.4",
     "universal-cookie": "^6.1.1"
   },
   "name": "nodejs-mysql",
