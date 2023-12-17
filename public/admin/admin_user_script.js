@@ -15,6 +15,7 @@ function handleDelete(event) {
             throw new Error('Network response was not ok');
         }
         console.log(`User with ID ${userId} deleted`);
+        toastr.success('Student Data Delete','Successfully')
     })
     .catch(error => {
         console.error('There was a problem with the delete request:', error);
@@ -53,6 +54,7 @@ function updateUserHandler(e) {
             throw new Error('Network response was not ok');
         }
         console.log(`User with ID ${userId} updated`);
+        toastr.success('Student Data Update','Successfully')
         showUpdatedData();
         // You might update the row with the new data after a successful update
     })
@@ -87,6 +89,8 @@ function handleUpdate(event) {
     // Show the update form
     const updateForm = document.querySelector('.update-user-form');
     updateForm.classList.remove('hidden');
+    
+
 }
 
 document.addEventListener('DOMContentLoaded', () => {

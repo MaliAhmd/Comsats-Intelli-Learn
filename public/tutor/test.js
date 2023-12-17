@@ -53,8 +53,10 @@ const getTutorVerifyDetails = async () => {
         }
 
         const res = await response.json();
-        // console.log(res[0])
+        console.log(res[0].t_image)
         const date = res[0].birthday
+        const img = `../documents/undefined/${res[0].t_image}`
+        document.querySelector('.profileImage').src = img
         document.querySelector(".bi").value=res[0].bio;
         document.querySelector(".birt").value=date.split("T")[0];
         document.querySelector(".co").value=res[0].country;
@@ -92,19 +94,56 @@ function show_stu_to_tutor() {
             tableBody.innerHTML = ''; // Clear previous data
             
             data.forEach(tutor => {
+                console.log(tutor)
                 const row = document.createElement('tr');
                 row.innerHTML = `
                     <td>${tutor.student_name}</td>
                     <td>${tutor.student_regno}</td>
                     <td>${tutor.student_email}</td>
-                    <td><button class="btn btn-approve">Enroll</button></td>
+                    <td><button class="btn btn-remove" onClick="Delete_enrollstudent(${tutor.id})">Remove</button></td>
                     <!-- Add other table data here based on your fetched columns -->
                 `;
                 tableBody.appendChild(row);
             });
+            
+    //         const deleteButtons = document.querySelectorAll('.content .btn-remove');
+    //         // console.log("ssss",deleteButtons.length);
+    //         deleteButtons.forEach(button => {
+    //             console.log("hello");
+    //             button.addEventListener('click', Delete_enrollstudent);
+    // });
         })
+        
         .catch(error => console.error('Error:', error));
 }
 document.addEventListener('DOMContentLoaded', function() {
     show_stu_to_tutor();
 });
+
+//remove enroll student
+function Delete_enrollstudent(id) {
+//     const enrollid = event.target.closest('tr').getAttribute('data-enrollid');
+//     const row = event.target.closest('tr');
+// // 
+//     // Perform the delete action on the front end
+//     row.remove();
+
+    // Implement the delete logic in the database
+    fetch(`/delete-enroll-tutor/${id}`, {
+        method: 'DELETE'
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        console.log(`Tutor with ID ${id} deleted`);
+        toastr.success('Student Data Delete','Successfully')
+        show_stu_to_tutor()
+    })
+    .catch(error => {
+        console.error('There was a problem with the delete request:', error);
+        // If there's an error, you may want to re-add the row to the table
+        // row.style.display = 'table-row';
+        // Or handle the error in an appropriate manner
+    });
+}

@@ -125,6 +125,7 @@ function handletutorDelete(event) {
             throw new Error('Network response was not ok');
         }
         console.log(`Tutor with ID ${tutorId} deleted`);
+        toastr.success('Student Data Delete','Successfully')
     })
     .catch(error => {
         console.error('There was a problem with the delete request:', error);
@@ -142,6 +143,7 @@ let updateTutorEmailField
 let tutorId
 function updatetutorhandler(e){
     e.preventDefault();
+    document.querySelector('.update-form').style.display='none' 
     const updatedData = {
         tutorId: tutorId,
         tutorName: updateTutorNameField.value,
@@ -162,6 +164,7 @@ function updatetutorhandler(e){
             throw new Error('Network response was not ok');
         }
         console.log(`Tutor with ID ${tutorId} updated`);
+        toastr.success('Student Data Update','Successfully')
         showupdatdata()
         // You might update the row with the new data after a successful update
         // For example, update the row with the new data in the table
@@ -179,7 +182,7 @@ function updatetutorhandler(e){
 function handletutorUpdate(event) {
     // console.log('Update button clicked');
     event.preventDefault(); // Prevent default behavior
-
+    document.querySelector('.update-form').style.display='block' 
     const row = event.target.closest('tr');
     tutorId = row.getAttribute('data-tutor-id');
     const tutorName = row.querySelector('.tutor-name').innerText;
@@ -297,10 +300,10 @@ function fetchTutorDetails() {
                     <td>${tutor.birthday}</td>
                     <td>${tutor.country}</td>
                     <td>${tutor.phone_no}</td>
-                    <td>${tutor.resume_file}</td>
-                    <td>${tutor.bachelors_file}</td>
-                    <td>${tutor.intermediate_file}</td>
-                    <td>${tutor.matrix_file}</td>
+                    <td><a href="../documents/${tutor.email}/${tutor.resume_file}">Resume</a></td>
+                    <td><a href="../documents/${tutor.email}/${tutor.bachelors_file}">Bachelors</a></td>
+                    <td><a href="../documents/${tutor.email}/${tutor.intermediate_file}">Intermediate</a></td>
+                    <td><a href="../documents/${tutor.email}/${tutor.matrix_file}">Matric</a></td>
                     <td><button class="btn btn-approve">Approve</button></td>
                     <!-- Add other table data here based on your fetched columns -->
                 `;

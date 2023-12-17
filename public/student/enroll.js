@@ -112,12 +112,49 @@ const test = async (id)=>{
         }
 
         const res = await response.json();
-        // studentdata=res
-        // console.log("User Data",studentdatadata)
-        // console.log(studentdata)
+        toastr.success('enroll with this teacher','Successfully')
+        studentdata=res
+        console.log("User Data",studentdata)
+        console.log(studentdata)
        
     } catch (error) {
         console.error('Error fetching tutor data:', error);
     }
 }
 // test();
+
+function getEnrollTutor() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const id = urlParams.get('id');
+    const tok = Cookies.get('token');
+    fetch(`/showselectedtutor/${id}`,{
+        method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${tok}`
+            },
+            credentials: "include",
+            withCredentials: true,
+    }) // Replace this with your backend route
+        .then(response => response.json())
+        .then(data => {
+            const tableBody = document.getElementById('enrollTutorBody');
+            tableBody.innerHTML = ''; // Clear previous data
+            console.log(data)
+            data.forEach(tutor => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td style="text-align: center;">${tutor.tutor_name}</td>
+                    <td style="text-align: center;">${tutor.tutor_subject}</td>
+                    <td style="text-align: center;">${tutor.tutor_email}</td>
+                    <!-- Add other table data here based on your fetched columns -->
+                `;
+                tableBody.appendChild(row);
+            });
+        })
+        .catch(error => console.error('Error:', error));
+}
+document.addEventListener('DOMContentLoaded', function() {
+    getEnrollTutor();
+});
+{/* <td><img src="../documents/undefined/${tutor.t_image}" width="100" height="100"/></td> */}

@@ -137,7 +137,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Function to handle form submission
     async function handleFormSubmission(event) {
         event.preventDefault();
-    
+        const tutor_image = document.querySelector('.tutor-image').files[0];
         const tutor_name = document.querySelector('.tutor-name').value;
         const tutor_email = document.querySelector('.tutor-email').value;
         const bio = document.querySelector('.bio').value;
@@ -148,9 +148,9 @@ document.addEventListener('DOMContentLoaded', function() {
         const matrix_file = document.querySelector('.metric-file').files[0];
         const intermediate_file = document.querySelector('.inter-file').files[0];
         const bachelors_file = document.querySelector('.bac-file').files[0];
-
+        console.log(tutor_image)
         // Validation checks
-        if (!tutor_name || !tutor_email || !bio || !birthday || !country || !phone_no || !resume_file || !matrix_file || !intermediate_file || !bachelors_file) {
+        if (!tutor_image || !tutor_name || !tutor_email || !bio || !birthday || !country || !phone_no || !resume_file || !matrix_file || !intermediate_file || !bachelors_file) {
         
         toastr.error('in COMSATS Intelli-Learn','Please fill in all fields')
 
@@ -160,6 +160,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
         const formData = new FormData();
+        formData.append('t_image', tutor_image);
         formData.append('tutor_name', tutor_name);
         formData.append('tutor_email', tutor_email);
         formData.append('bio', bio);

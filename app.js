@@ -183,10 +183,10 @@ app.get('/logout', (req, res) => {
 });
 
 app.get('/show-tutors-details', (req, res) => {
-    const query = 'SELECT id, tutor_name, tutor_subject, tutor_email FROM tutor'; // Replace 'tutors' with your table name
+    const query = "SELECT tutor.id, tutor.tutor_name, tutor.tutor_subject, tutor.tutor_email,verifytutor.t_image FROM tutor LEFT JOIN verifytutor ON verifytutor.tutorId = tutor.id"; // Replace 'tutors' with your table name
 
     pool.query(query, (err, result) => {
-        if (err) {
+        if (err) {  
             console.error(err);
             return res.status(500).json({ error: 'Failed to fetch tutor details' });
         }
@@ -202,11 +202,11 @@ app.get('/show-tutors-details', (req, res) => {
 //   });
 app.post('/studentdata',auth,async (req, res) => {
     const { student_name, student_regno, student_email,tutor_id } = req.body;
-
+    const id = req.user.id
     try {
         // Store the hashed password in the database
-        const sql = 'INSERT INTO enrollstudent (student_name, student_regno, student_email,tutor_id) VALUES (?, ?, ?,?)';
-        const values = [student_name, student_regno, student_email, tutor_id];
+        const sql = 'INSERT INTO enrollstudent (student_name, student_regno, student_email,tutor_id,user_id) VALUES (?,?,?,?,?)';
+        const values = [student_name, student_regno, student_email, tutor_id,id];
 
         pool.query(sql, values, (err, result) => {
             if (result) {
@@ -232,6 +232,21 @@ app.get('/show-student-details/:id', (req, res) => {
         if (err) {
             console.error(err);
             return res.status(500).json({ error: 'Failed to fetch tutor details' });
+        }
+
+        // Assuming you have the result with tutor details
+        res.status(200).json(result); // Return the tutor details as JSON
+    });
+});
+
+app.get('/showselectedtutor/:id',auth, (req, res) => {
+    const id = req.params.id;
+    const query = 'SELECT t.tutor_name,t.tutor_email,t.tutor_subject FROM tutor AS t LEFT JOIN enrollstudent AS es ON  t.id = es.tutor_id WHERE es.user_id = ?';
+
+    pool.query(query,[id], (err, result) => {   
+        if (err) {
+            console.error(err);
+            return res.status(500).json({ error: 'Failed to show student to tutor' });
         }
 
         // Assuming you have the result with tutor details
