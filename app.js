@@ -87,7 +87,7 @@ app.post('/register', async (req, res) => {
 
       // Store the hashed password in the database
       const sql = 'INSERT INTO users (firstname, lastname, regno, email, password) VALUES (?, ?,?, ?, ?)';
-      const values = [firstname, lastname, regno, email, hashedPassword];
+      const values = [firstname, lastname, regno, email, hahedPassword];
 
       pool.query(sql, values, (err, result) => {
           if (err) {

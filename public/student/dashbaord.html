@@ -388,31 +388,7 @@ function toggleSection(sectionName) {
         });
     });
 });
-function showTutorDetails() {
-          fetch('/show-tutors-details') // Replace this with your backend route
-              .then(response => response.json())
-              .then(data => {
-                  const tableBody = document.getElementById('tableBody');
-                  tableBody.innerHTML = ''; // Clear previous data
-                  
-                  data.forEach(tutor => {
-                      const row = document.createElement('tr');
-                      row.innerHTML = `
-                            <td><img src="../documents/undefined/${tutor.t_image}" width="100" height="100"/></td>
-                          <td>${tutor.tutor_name}</td>
-                          <td>${tutor.tutor_subject}</td>
-                          <td>${tutor.tutor_email}</td>
-                          <td><button class="btn btn-approve"onClick="test(${tutor.id})">Enroll</button></td>
-                          <!-- Add other table data here based on your fetched columns -->
-                      `;
-                      tableBody.appendChild(row);
-                  });
-              })
-              .catch(error => console.error('Error:', error));
-      }
-document.addEventListener('DOMContentLoaded', function() {
-    showTutorDetails();
-    });
+
 
 </script>
 <script>
