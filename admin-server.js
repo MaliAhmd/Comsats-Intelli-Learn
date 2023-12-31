@@ -185,5 +185,18 @@ app.delete('/delete-tutor/:id', (req, res) => {
             res.status(200).json(result); // Return the tutor details as JSON
         });
     });
+    app.put('/approvetutor/:id',(req,res)=>{
+        const AppId = req.params.id;
+        const query='update verifytutor SET approve=? where id=?'
+        pool.query(query,['1',AppId], (err, result) => {
+            if (err) {
+                console.error(err);
+                return res.status(500).json({ error: 'Failed to approve tutor details' });
+            }
+    
+            // Assuming you have the result with tutor details
+            res.status(200).json({result,message:"successfully approve!"}); // Return the tutor details as JSON
+        });
+    })
 
 }

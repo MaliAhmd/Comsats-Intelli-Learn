@@ -337,6 +337,23 @@ app.delete('/delete-enroll-tutor/:id', (req, res) => {
         res.status(200).json({ message: 'Student remove successfully' });
     });
 });
+
+
+app.get('/tutorDetails',auth, (req, res) => {
+    const id = req.user.id
+    const query = 'SELECT  id,approve FROM verifytutor where tutorId = ?'; // Replace 'tutors' with your table name
+
+    tutorPool.query(query,[id], (err, result) => {
+        if (err) {
+            console.error(err);
+            return res.status(500).json({ error: 'Failed to fetch tutor details' });
+        }
+
+        // Assuming you have the result with tutor details
+        res.status(200).json(result); // Return the tutor details as JSON
+    });
+});
+
 }
 
 

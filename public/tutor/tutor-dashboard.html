@@ -392,6 +392,30 @@
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
     <script>
+        let approve ;
+        async function getTutorDetails() {
+            const tok = Cookies.get('token');
+            const urlParams = new URLSearchParams(window.location.search);
+            const id = urlParams.get('id');
+                const data = await fetch(`/tutorDetails`,
+                {
+                    method: 'GET',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            Authorization: `Bearer ${tok}`
+                        },
+                        credentials: "include",
+                        withCredentials: true,
+                    })
+                // Replace this with your backend route
+                const res = await data.json()
+                approve =  res[0].approve
+
+        }
+        document.addEventListener('DOMContentLoaded',async function() {
+            await getTutorDetails();
+        });
+        
         function toggleSection(sectionName) {
                 const verifyaccounts = document.querySelector('.verifyaccounts');
                 const accountsettings = document.querySelector('.accountsetttings');
@@ -420,7 +444,7 @@
                     arrangeMeetingDiv.classList.add('hidden');
                     joinClassDiv.classList.add('hidden');
                     totalStudentsDiv.classList.add('hidden');
-                } else if (sectionName === 'arrangeMeeting') {
+                } else if (sectionName === 'arrangeMeeting') {      
                     basicInfoDiv.classList.add('hidden');
                     arrangeMeetingDiv.classList.toggle('hidden');
                     joinClassDiv.classList.add('hidden');
@@ -470,15 +494,32 @@
             document.querySelector('.card:nth-child(1)').addEventListener('click', function () {
                 toggleSection('basicInfo');
             });
-            document.querySelector('.card:nth-child(2)').addEventListener('click', function () {
-                toggleSection('arrangeMeeting');
-            });
+            setTimeout(() => {
+                if(approve === 1){
+                    document.querySelector('.card:nth-child(2)').addEventListener('click', function () {
+                     toggleSection('arrangeMeeting');
+                    });
+                }
+            },2000)
+            
             document.querySelector('.card:nth-child(3)').addEventListener('click', function () {
                 toggleSection('joinClass');
             });
-            document.querySelector('.card:nth-child(4)').addEventListener('click', function () {
-                toggleSection('totalStudents');
-            });
+            console.log("Test approve id",approve)
+            setTimeout(() => {
+                if(approve === 1){
+                   
+                    document.querySelector('.card:nth-child(4)').addEventListener('click', function () {
+                        toggleSection('totalStudents');
+                    });
+                }else{
+                    document.querySelector('.card:nth-child(4)').addEventListener('click', function () {
+                        toastr.warning('Not Approve Yet!','Not Approve')
+                    });
+                   
+                }
+            },2000)
+            
 
            
             document.addEventListener('DOMContentLoaded', function() {
@@ -524,6 +565,7 @@
             document.querySelector('.verifyaccounts').classList.add('hidden');
             document.querySelector('.cardBox').classList.remove('hidden');
 });
+console.log(approve)
         </script>
             <script type="text/javascript">
                 

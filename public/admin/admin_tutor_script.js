@@ -304,7 +304,7 @@ function fetchTutorDetails() {
                     <td><a href="../documents/${tutor.email}/${tutor.bachelors_file}">Bachelors</a></td>
                     <td><a href="../documents/${tutor.email}/${tutor.intermediate_file}">Intermediate</a></td>
                     <td><a href="../documents/${tutor.email}/${tutor.matrix_file}">Matric</a></td>
-                    <td><button class="btn btn-approve">Approve</button></td>
+                    <td><button class="btn btn-approve" onClick="approvetutor(${tutor.id})">Approve</button></td>
                     <!-- Add other table data here based on your fetched columns -->
                 `;
                 tableBody.appendChild(row);
@@ -318,3 +318,30 @@ function fetchTutorDetails() {
 document.addEventListener('DOMContentLoaded', function() {
     fetchTutorDetails();
 });
+
+function approvetutor(id) {
+    //     const enrollid = event.target.closest('tr').getAttribute('data-enrollid');
+    //     const row = event.target.closest('tr');
+    // // 
+    //     // Perform the delete action on the front end
+    //     row.remove();
+    
+        // Implement the delete logic in the database
+        fetch(`/approvetutor/${id}`, {
+            method: 'PUT'
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            console.log(`Tutor with ID ${id} deleted`);
+            toastr.success('Tutor Approved','Successfully')
+            
+        })
+        .catch(error => {
+            console.error('There was a problem with the approve request:', error);
+            // If there's an error, you may want to re-add the row to the table
+            // row.style.display = 'table-row';
+            // Or handle the error in an appropriate manner
+        });
+    }
