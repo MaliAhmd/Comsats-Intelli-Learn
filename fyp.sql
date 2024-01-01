@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 23, 2023 at 01:11 PM
+-- Generation Time: Dec 31, 2023 at 06:34 PM
 -- Server version: 10.4.32-MariaDB
--- PHP Version: 8.0.30
+-- PHP Version: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -135,18 +135,19 @@ CREATE TABLE `verifytutor` (
   `intermediate_file` varchar(255) DEFAULT NULL,
   `bachelors_file` varchar(255) DEFAULT NULL,
   `tutorId` int(11) DEFAULT NULL,
-  `t_image` varchar(255) NOT NULL
+  `t_image` varchar(255) NOT NULL,
+  `approve` tinyint(1) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `verifytutor`
 --
 
-INSERT INTO `verifytutor` (`id`, `name`, `email`, `bio`, `birthday`, `country`, `phone_no`, `resume_file`, `matrix_file`, `intermediate_file`, `bachelors_file`, `tutorId`, `t_image`) VALUES
-(8, 'Abdullah', 'Abdullahahmad@gmail.com', 'I am Abdullah Ahmad ', '2023-12-16', 'Pakistan', '03090555415', '1702659072091-384645013.pdf', '1702659072114-981837919.pdf', '1702659072119-394725679.pdf', '1702659072124-569659598.pdf', 6, ''),
-(9, 'Abdullah Ali', 'abdullahali@gmail.com', 'i Am Abdullah', '2023-12-02', 'Pakistan', '03090555415', '1702659328503-259209718.pdf', '1702659328519-288117123.pdf', '1702659328523-214353232.pdf', '1702659328524-135935231.pdf', 7, ''),
-(10, 'Zaheer', 'zaheer@gmail.com', 'I  am Zaheer', '2023-12-02', 'Pakistan', '03090555415', '1702712500292-876263258.pdf', '1702712500327-702749912.pdf', '1702712500333-972649296.pdf', '1702712500334-436039226.pdf', 8, ''),
-(11, 'Saad', 'saad@gmail.com', 'I Am Saad', '2023-12-02', 'Pakistan', '68453120', '1702713246958-12297103.pdf', '1702713246970-880157656.pdf', '1702713246973-557017139.pdf', '1702713246976-859091008.pdf', 9, '');
+INSERT INTO `verifytutor` (`id`, `name`, `email`, `bio`, `birthday`, `country`, `phone_no`, `resume_file`, `matrix_file`, `intermediate_file`, `bachelors_file`, `tutorId`, `t_image`, `approve`) VALUES
+(8, 'Abdullah', 'Abdullahahmad@gmail.com', 'I am Abdullah Ahmad ', '2023-12-16', 'Pakistan', '03090555415', '1702659072091-384645013.pdf', '1702659072114-981837919.pdf', '1702659072119-394725679.pdf', '1702659072124-569659598.pdf', 6, '', 1),
+(9, 'Abdullah Ali', 'abdullahali@gmail.com', 'i Am Abdullah', '2023-12-02', 'Pakistan', '03090555415', '1702659328503-259209718.pdf', '1702659328519-288117123.pdf', '1702659328523-214353232.pdf', '1702659328524-135935231.pdf', 7, '', 1),
+(10, 'Zaheer', 'zaheer@gmail.com', 'I  am Zaheer', '2023-12-02', 'Pakistan', '03090555415', '1702712500292-876263258.pdf', '1702712500327-702749912.pdf', '1702712500333-972649296.pdf', '1702712500334-436039226.pdf', 8, '', 0),
+(11, 'Saad', 'saad@gmail.com', 'I Am Saad', '2023-12-02', 'Pakistan', '68453120', '1702713246958-12297103.pdf', '1702713246970-880157656.pdf', '1702713246973-557017139.pdf', '1702713246976-859091008.pdf', 9, '', 0);
 
 --
 -- Indexes for dumped tables

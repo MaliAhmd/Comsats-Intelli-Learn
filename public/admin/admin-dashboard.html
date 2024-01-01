@@ -238,27 +238,41 @@
    
 </div>
 <div class="update-user-form">
-    <h2>Update User</h2>
+    <div style="display: flex;justify-content: space-between;align-items: center;">
+        <h2 style="margin-bottom:10px;color:#fff;">Update Student</h2>
+        <div class="closeBtn"style="cursor: pointer;">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" style="fill: #fff;"><path d="M16 2H8C4.691 2 2 4.691 2 8v13a1 1 0 0 0 1 1h13c3.309 0 6-2.691 6-6V8c0-3.309-2.691-6-6-6zm4 14c0 2.206-1.794 4-4 4H4V8c0-2.206 1.794-4 4-4h8c2.206 0 4 1.794 4 4v8z"></path><path d="M15.292 7.295 12 10.587 8.708 7.295 7.294 8.709l3.292 3.292-3.292 3.292 1.414 1.414L12 13.415l3.292 3.292 1.414-1.414-3.292-3.292 3.292-3.292z"></path></svg>
+        </div>
+    </div>
     <form id="updateUserForm">
-        <div class="p-3">
-            <label for="updateUserFirstname">First Name:</label>
-            <input type="text" id="updateUserFirstname" name="updateUserFirstname" required>
+        <div class="p-3" style="margin-bottom:20px;display: flex;
+        justify-content: space-around;
+        align-items: center;">
+            <label for="updateUserFirstname"style="color:#fff;">First Name:</label>
+            <input type="text" id="updateUserFirstname" name="updateUserFirstname" style="border: 1px solid #000;padding:7px;" required>
         </div>
-        <div class="p-3">
-            <label for="updateUserLastname">Last Name:</label>
-            <input type="text" id="updateUserLastname" name="updateUserLastname" required>
+        <div class="p-3"style="margin-bottom:20px;display: flex;
+        justify-content: space-around;
+        align-items: center;">
+            <label for="updateUserLastname"style="color:#fff;">Last Name:</label>
+            <input type="text" id="updateUserLastname" name="updateUserLastname"style="border: 1px solid #000;padding:7px;" required>
         </div>
-        <div class="p-3">
-            <label for="updateUserRegno">Registration No.:</label>
-            <input type="text" id="updateUserRegno" name="updateUserRegno" required>
+        <div class="p-3"style="margin-bottom:20px;display: flex;
+        justify-content: space-around;
+        align-items: center;">
+            <label for="updateUserRegno"style="color:#fff;">Registration No:</label>
+            <input type="text" id="updateUserRegno" name="updateUserRegno" style="border: 1px solid #000;padding:7px;margin-left: -32px;" required>
         </div>
-        <div class="p-3">
-            <label for="updateUserEmail">Email:</label>
-            <input type="email" id="updateUserEmail" name="updateUserEmail" required>
+        <div class="p-3"style="margin-bottom:20px;display: flex;
+        justify-content: space-around;
+        align-items: center;">
+            <label for="updateUserEmail"style="color:#fff;">Email:</label>
+            <input type="email" id="updateUserEmail" name="updateUserEmail" style="border: 1px solid #000;padding:7px;margin-left: 39px;
+            " required>
         </div>
-        <div class="p-3">
+        <div class="p-3 button-group">
             <button type="submit" id="updateUserBtn">Update User</button>
-            <button type="button" class="btn-cancel-update">Cancel</button>
+            <!-- <button type="button" class="btn-cancel-update">Cancel</button> -->
         </div>
     </form>
 </div>
@@ -271,5 +285,10 @@
     <script src="adminScript.js"></script>
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+    <script>
+        document.querySelector(".closeBtn").addEventListener('click',()=>{
+            document.querySelector('.update-user-form').style.display ="none"
+        })
+    </script>
 </body>
 </html>

@@ -352,8 +352,37 @@ th, td {
   
 .update-user-form{
     display: none;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    background: linear-gradient(rgba(39, 39, 39, 0.8), rgba(39, 39, 39, 0.8));
+    height: 300px;
+    border-radius: 2px solid #000;
+    padding: 17px;
+    border: 2px solid #000;
+    transform: translate(-50%, -50%);
+    width: 450px;
+    height: 350px;
 }
-
+.button-group{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.button-group button{
+    width: 130px;
+    height: 40px;
+    margin: 0 10px;
+    padding: 10px;
+    font-size: 15px;
+    font-weight: 500;
+    color: black;
+    background: rgba(255, 255, 255, 0.7);
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: .3s ease-in-out;
+}
 .modal {
     display: none;
     position: fixed;

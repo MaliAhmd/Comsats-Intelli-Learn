@@ -7,6 +7,7 @@ const bcrypt = require('bcrypt');
 const cookieParser = require('cookie-parser');
 const tutor_server = require('./tutor-server')
 const admin_server=require('./admin-server')
+
 const jwt=require('jsonwebtoken')
 const auth=require('./Middleware/auth')
 const cors=require("cors")
@@ -46,8 +47,11 @@ app.use(cookieParser())
 app.use(cors(corsOptions))
 app.use(express.json({limit:'50mb'}))
 app.use(express.urlencoded({limit:'50mb', extended:true }))
+
 tutor_server(app)
 admin_server(app)
+
+
 const pool = mysql.createPool({
     connectionLimit: 10,
     host: 'localhost',
