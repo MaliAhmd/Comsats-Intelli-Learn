@@ -92,7 +92,7 @@ app.post('/tutor-login', async (req, res) => {
                 token= await jwt.sign(
                     {id:tutor.id,email:tutor_email},
                     "Comsats_Intelli-learn",
-                    {expiresIn: '24h'}
+                    {expiresIn: '1h'}
                   )
                   res.status(200).json({result,token})
                 // res.redirect('/tutor/tutor-dashboard.html');

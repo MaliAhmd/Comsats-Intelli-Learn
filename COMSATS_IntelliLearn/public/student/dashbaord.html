@@ -29,8 +29,8 @@
                 </li>
                 <li>
                     <a href="#" data-section="joinmeeting">
-                        <span class="icon"><ion-icon name="person-outline"></ion-icon></span>
-                        <span class="title">Join Meeting</span>
+                        <span class="icon"><ion-icon name="book-outline"></ion-icon></span>
+                        <span class="title">Courses</span>
                     </a>
                 </li>
                 <li>
@@ -154,7 +154,25 @@
 
 <!-- join meeting code -->
 <div class="joinmeeting hidden">
-<p>join meeting code here</p>
+    <div class="search">
+        <label class="searchbar">
+    <input type="text" id="searchInput" placeholder="search your course">
+
+    <button class="searchbtn" onclick="searchVideos()">Search</button>
+</label>
+</div> 
+<div id="notFoundMessage" class="notFoundMessage">
+    <p>Not Found</p>
+</div>  
+        <div>
+            <p>hello</p>
+        </div>
+        <div class="video-container">
+            <div id="player"></div>
+        </div>
+        <div id="text">Other videos of Playlist</div>
+        <div class="thumbnails-container" id="thumbnails-container"></div>
+    </div>
 </div>
 
 <!-- account settting code here -->
@@ -265,8 +283,8 @@
         </div>
     </div> 
     </div>
-</div>
-</div>
+
+<script src="https://www.youtube.com/iframe_api"></script>
 
 <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/js/bootstrap.bundle.min.js"></script>
@@ -274,6 +292,7 @@
 <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
 <script src="enroll.js"></script>
+<script src="course.js"></script>
 <script>
 
 function toggleSection(sectionName) {

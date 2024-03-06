@@ -244,7 +244,176 @@ th, td {
     text-align: left;
   }
 
+/* course css */
 
+.thumbnails-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+.thumbnails-container img {
+    margin: 0;
+    width: 150px;
+    height: auto;
+}
+.video-title {
+    text-align: center;
+    margin-top: 5px;
+    font-size: 19px;
+    padding: 5px 5px;
+}
+.video-container{
+    margin: 0 60px;
+}
+
+.list-block {
+    float: left;
+    margin: 31px;
+    width: 26%;
+    font-size: 0;
+    overflow: hidden;
+    -moz-border-radius: 30px;
+    -webkit-border-radius: 30px;
+    border-radius: 30px;
+    -moz-box-shadow: 0px 6px 20px rgba(0, 0, 0, 0.2);
+    -webkit-box-shadow: 0px 6px 20px rgba(0, 0, 0, 0.2);
+    box-shadow: 0px 6px 20px rgba(0, 0, 0, 0.2);
+  }
+
+  .search{
+    display: flex;
+    justify-content: center;
+  }
+  .search label input {
+    width: 100%;
+    height: 40px;
+    border-radius: 40px;
+    padding: 5px 20px;
+    padding-left: 35px;
+    font-size: 18px;
+    outline: none;
+    border: 1px solid var(--black2);
+  }
+
+  .searchbar{
+    display: flex;
+    gap: 7px;
+  }
+  .searchbtn {
+    display: inline-block;
+    padding: 5px 20px;
+    margin-left: 10px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    background: rgba(255, 255, 255, 0.9);
+    transition: background 0.3s ease;
+}
+  .list-block figure {
+    position: relative;
+    display: block;
+    color: black;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 0;
+  }
+.notFoundMessage {
+    display: none;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #ffffff;
+    border: 1px solid #cccccc;
+    padding: 20px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    z-index: 9999;
+}
+#text{
+    font-family: 'Ubuntu', sans-serif;
+    display: none;
+    font-weight: bold;
+    font-size: 30px;
+    margin: 0 60px;
+    margin-top: 10px;
+}
+.notFoundMessage p {
+    margin: 0;
+}
+  .list-block figure:after {
+    background: #fff;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    content: "";
+    filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=70);
+    opacity: 0.7;
+    -webkit-transform: skew(-45deg) scaleX(0);
+    -ms-transform: skew(-45deg) scaleX(0);
+    transform: skew(-45deg) scaleX(0);
+    -moz-transition: all 0.3s ease-in-out;
+    -o-transition: all 0.3s ease-in-out;
+    -webkit-transition: all 0.3s ease-in-out;
+    transition: all 0.3s ease-in-out;
+  }
+  .list-block figure:hover:after {
+    -webkit-transform: skew(-45deg) scaleX(1);
+    -ms-transform: skew(-45deg) scaleX(1);
+    transform: skew(-45deg) scaleX(1);
+    -moz-transition: all 400ms cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    -o-transition: all 400ms cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    -webkit-transition: all 400ms cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    transition: all 400ms cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  }
+  .list-block img {
+    filter: progid:DXImageTransform.Microsoft.Alpha(enabled=false);
+    opacity: 1;
+    max-width: 100%;
+    min-width: 100%;
+    -moz-transition: opacity 0.35s ease;
+    -o-transition: opacity 0.35s ease;
+    -webkit-transition: opacity 0.35s ease;
+    transition: opacity 0.35s ease;
+  }
+  .list-block figcaption {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    width: 100%;
+    -moz-transform: translateY(-50%);
+    -ms-transform: translateY(-50%);
+    -webkit-transform: translateY(-50%);
+    transform: translateY(-50%);
+    z-index: 1;
+  }
+  .list-block p {
+    margin: 0;
+    width: 100%;
+    filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=0);
+    opacity: 0;
+    font-size: 14px;
+    text-transform: uppercase;
+  }
+  .list-block figure:hover figcaption p {
+    -moz-transform: translate3d(0%, 0%, 0);
+    -webkit-transform: translate3d(0%, 0%, 0);
+    transform: translate3d(0%, 0%, 0);
+    -webkit-transition-delay: 0.2s;
+    transition-delay: 0.2s;
+    font-weight: 900;
+  }
+  .list-block figure:hover figcaption p {
+    filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=70);
+    opacity: 0.7;
+    font-size: 14px;
+  }
 
 /* make it responsive*/
 @media (max-width: 991px) {
