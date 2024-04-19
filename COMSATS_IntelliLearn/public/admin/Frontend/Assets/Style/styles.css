@@ -8,7 +8,7 @@
     font-family: 'Poppins', sans-serif;
 }
 body{
-    background: url("bg11.jpg");
+    background: url("../Images/bg11.jpg");
     background-size: cover;
     background-repeat: no-repeat;
     background-attachment: fixed;

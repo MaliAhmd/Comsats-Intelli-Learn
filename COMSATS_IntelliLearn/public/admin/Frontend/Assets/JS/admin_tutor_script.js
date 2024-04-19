@@ -1,12 +1,14 @@
 function toggleSection(sectionName) {
     const manageTutors = document.querySelector('.manageTutors');
     const manageUsers = document.querySelector('.manageUsers');
+    const managequiz = document.querySelector('.managequiz');
     const cardBox = document.querySelector('.cardBox');
     const details = document.querySelector('.details');
 
     if (sectionName === 'manageTutors') {
         manageTutors.classList.remove('hidden');
         manageUsers.classList.add('hidden');
+        managequiz.classList.add('hidden');
         cardBox.classList.add('hidden');
         details.classList.add('hidden');
         // document.querySelector(".navigation").classList.add("resp-nav")
@@ -15,14 +17,22 @@ function toggleSection(sectionName) {
     } else if (sectionName === 'manageUsers') {
         manageTutors.classList.add('hidden');
         manageUsers.classList.remove('hidden');
+        managequiz.classList.add('hidden');
         cardBox.classList.add('hidden');
         details.classList.add('hidden');
         // document.querySelector(".navigation").classList.add("resp-nav")
         // document.querySelector('.main').classList.remove('navigation-active')
         // document.querySelector('.topbar').classList.remove('resp-hamburger')
-    } else if (sectionName === 'home') {
+    }else if(sectionName==='managequiz'){
         manageTutors.classList.add('hidden');
         manageUsers.classList.add('hidden');
+        managequiz.classList.remove('hidden');
+        cardBox.classList.add('hidden');
+        details.classList.add('hidden');
+    }else if (sectionName === 'home') {
+        manageTutors.classList.add('hidden');
+        manageUsers.classList.add('hidden');
+        managequiz.classList.add('hidden');
         cardBox.classList.remove('hidden');
         details.classList.remove('hidden');
         // document.querySelector(".navigation").classList.add("resp-nav")
@@ -107,7 +117,7 @@ document.addEventListener('DOMContentLoaded', function() {
         })
         .then(response => {
             // console.log('Logout request sent successfully');
-            window.location.href = '/public/admin/a_index.html'; // Redirect after logout
+            window.location.href = '/public/admin/Frontend/a_index.html'; // Redirect after logout
         })
         .catch(error => {
             console.error('Error sending logout request:', error);

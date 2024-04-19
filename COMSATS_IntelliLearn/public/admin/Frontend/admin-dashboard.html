@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Dashbaord</title>
-    <link rel="stylesheet" href="admin-dashbaord.css">
-    <link rel="icon" type="image/png" href="logo.jpg">
+    <link rel="stylesheet" href="./Assets/Style/admin-dashbaord.css">
+    <link rel="icon" type="image/png" href="./Assets/Images/logo.jpg">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">  
@@ -14,7 +14,7 @@
     <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous"> -->
 </head>
 <body>
-    <div class="container">
+    <div class="containerr">
         <div class="navigation">
             <ul>
                 <li>
@@ -39,6 +39,12 @@
                     <a href="#" data-section="manageUsers">
                         <span class="icon"><ion-icon name="people-outline"></ion-icon></span>
                         <span class="title">Manage Student</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#" data-section="managequiz">
+                        <span class="icon"><ion-icon name="newspaper-outline"></ion-icon></span>
+                        <span class="title">Manage Quiz</span>
                     </a>
                 </li>
                 <li>
@@ -291,11 +297,48 @@
     </form>
 </div>
 
+
         </div>
+        <!-- manage quiz -->
+        <div class="managequiz hidden">
+            <div class="buttons">
+                <button class="btn_quiz_create">Create Quiz</button>
+            </div>
+        
+            <div id="ShowCategory" class="container_title">
+                <input type="text" id="title" class="question" placeholder="title" required><br>
+                <input type="text"id="category" class="question" placeholder="Category" required><br>
+                <button id="nextbtn" class="btn">Next</button>
+            </div>
+            <div id="showmcqs" class="container">
+
+                <h4>Write MCQS here</h4>
+                <div class="innercontainer">
+                    <div class="questionSet">
+                        <input type="text" id="question" class="question" placeholder="Write ques" required><br>
+                        
+                        <input type="radio" class="options" name="question">
+                        <input type="text" id="optA" class="text" placeholder="Option A" required><br>
+            
+                        <input type="radio" class="options" name="question">
+                        <input type="text" id="optB" class="text"  placeholder="Option B" required><br>
+            
+                        <input type="radio" class="options" name="question">
+                        <input type="text" id="optC" class="text" placeholder="Option C" required><br>
+            
+                        <input type="radio" class="options" name="question">
+                        <input type="text" id="optD" class="text" placeholder="Option D" required><br>
+                    </div>
+                   
+                </div>
+                <button id="submitBtn" class="Btn_submit" type="submit">Submit</button>
+            </div>
+            </div>
     </div>
-    <script src="visit-graph.js" defer></script>
-    <script src="admin_tutor_script.js"></script>
-    <script src="admin_user_script.js"></script>
+    <script src="./Assets/JS/visit-graph.js"></script>
+    <script src="./Assets/JS/admin_tutor_script.js"></script>
+    <script src="./Assets/JS/admin_user_script.js"></script>
+    <script src="./Assets/JS/quiz_create.js"></script>
     <!-- <script src="adminScript.js"></script> -->
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>

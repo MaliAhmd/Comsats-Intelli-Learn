@@ -36,7 +36,7 @@ app.post('/admin-login', (req, res) => {
 
         // Assuming the query returned a user, proceed with login
         console.log('admin logged in successfully');
-        res.redirect('/public/admin/admin-dashboard.html');
+        res.redirect('/public/admin/Frontend/admin-dashboard.html');
     });
 });
 
@@ -51,12 +51,12 @@ app.get('/admin-logout', (req, res) => {
         } else {
             console.log('Logout Successfully')
             // Redirect to the login page or send a success response
-            res.redirect('/public/admin/a_index.html'); // You can replace '/login' with the actual login page URL
+            res.redirect('/public/admin/Frontend/a_index.html'); // You can replace '/login' with the actual login page URL
         }
     });
 } else {
     // If there is no session, consider the user as already logged out
-    res.redirect('/public/admin/a_index.html'); // You can replace '/login' with the actual login page URL
+    res.redirect('/public/admin/Frontend/a_index.html'); // You can replace '/login' with the actual login page URL
 }
 });
 
@@ -198,5 +198,51 @@ app.delete('/delete-tutor/:id', (req, res) => {
             res.status(200).json({result,message:"successfully approve!"}); // Return the tutor details as JSON
         });
     })
+    app.post('/createquiz',(req,res)=>{
+        const  {quiz_title,quiz_category}=req.body;
+        if(!quiz_title || !quiz_category){
+            return res.status(400).json({error: 'All fields are required'})
+        }
+
+        const sql='INSERT INTO category (title,category) VALUES (?,?)';
+        const values=[quiz_title,quiz_category];
+        pool.query(sql,values,(err,result)=>{
+            if(err){
+                console.error("Error to store in database",err);
+                res.status(500).json({error:"Error to store"});
+                return;
+            }
+            const fetchSql = 'SELECT * FROM category WHERE id = ?'; // Assuming you have an auto-incremented ID column
+            const fetchValues = [result.insertId]; // Assuming the ID is auto-incremented
+    
+            pool.query(fetchSql, fetchValues, (fetchErr, fetchResult) => {
+                if (fetchErr) {
+                    console.error("Error fetching data from database", fetchErr);
+                    return res.status(500).json({ error: "Error fetching data" });
+                }
+                // Send the fetched data in the response
+                res.json({ message: 'Successfully stored and fetched from database', result: fetchResult });
+            });
+
+        });
+        });
+
+        app.post('/createmcqs',(req,res)=>{
+            const {question,optA,optB,optC,optD,Correctopt,category_id}=req.body;
+            if(!question || !optA || !optB || !optC || !optD || !Correctopt){
+                return res.status(400).json({error: 'All fields are required'});
+            }
+            const sql='INSERT INTO mcqs (question,optA,optB,optC,optD,Correctopt,category_id) VALUES (?,?,?,?,?,?,?)';
+            const values=[question,optA,optB,optC,optD,Correctopt,category_id];
+            pool.query(sql,values,(err,result)=>{
+                if(err){
+                    console.error("Error to store in database",err);
+                    res.status(500).json({error:"Error to store"});
+                    return;
+                }
+                res.json({message: 'Successfully store in database'});
+
+            });
+        });
 
 }

@@ -91,7 +91,7 @@ app.post('/register', async (req, res) => {
 
       // Store the hashed password in the database
       const sql = 'INSERT INTO users (firstname, lastname, regno, email, password) VALUES (?, ?,?, ?, ?)';
-      const values = [firstname, lastname, regno, email, hahedPassword];
+      const values = [firstname, lastname, regno, email, hashedPassword];
 
       pool.query(sql, values, (err, result) => {
           if (err) {
@@ -143,7 +143,7 @@ app.post('/login', async (req, res) => {
               token= await jwt.sign(
                 {id:user.id,reg:regno},
                 "Comsats_Intelli-learn",
-                {expiresIn: '1h'}
+                {expiresIn: '24 h'}
               )
               res.status(200).json({result,token})
           } else {
@@ -177,12 +177,12 @@ app.get('/logout', (req, res) => {
                 // Remove the cookie upon logout
                 res.clearCookie('user_auth'); // Remove the cookie named 'user_auth'
                 // Redirect to the login page or send a success response
-                res.redirect('/public/student/s_index.html'); // You can replace '/login' with the actual login page URL
+                res.redirect('/public/student/Frontend/s_index.html'); // You can replace '/login' with the actual login page URL
             }
         });
     } else {
         // If there is no session, consider the user as already logged out
-        res.redirect('/public/student/s_index.html'); // You can replace '/login' with the actual login page URL
+        res.redirect('/public/student/Frontend/s_index.html'); // You can replace '/login' with the actual login page URL
     }
 });
 
@@ -245,7 +245,7 @@ app.get('/show-student-details/:id', (req, res) => {
 
 app.get('/showselectedtutor/:id',auth, (req, res) => {
     const id = req.params.id;
-    const query = 'SELECT t.tutor_name,t.tutor_email,t.tutor_subject FROM tutor AS t LEFT JOIN enrollstudent AS es ON  t.id = es.tutor_id WHERE es.user_id = ?';
+    const query = 'SELECT t.id,t.tutor_name,t.tutor_email,t.tutor_subject FROM tutor AS t LEFT JOIN enrollstudent AS es ON  t.id = es.tutor_id WHERE es.user_id = ?';
 
     pool.query(query,[id], (err, result) => {   
         if (err) {
@@ -257,6 +257,87 @@ app.get('/showselectedtutor/:id',auth, (req, res) => {
         res.status(200).json(result); // Return the tutor details as JSON
     });
 });
+
+app.get('/getquizcategory', auth ,(req,res)=>{
+    const query='SELECT category,id from category';
+    pool.query(query,(err,result)=>{
+        if (err) {
+            console.error(err);
+            return res.status(500).json({ error: 'Failed to show category' });
+        }
+
+        // Assuming you have the result
+        res.status(200).json(result); 
+    })
+});
+
+// app.get('/t_getquizcategory', auth ,(req,res)=>{
+//     const query='SELECT t_category,id,tutor_id from t_category';
+//     pool.query(query,(err,result)=>{
+//         if (err) {
+//             console.error(err);
+//             return res.status(500).json({ error: 'Failed to show category' });
+//         }
+
+//         // Assuming you have the result
+//         res.status(200).json(result); 
+//     })
+// });
+
+app.get('/getmcqs/:id',auth,(req,res)=>{
+    const cat_id=req.params.id
+    const query='select * from mcqs where category_id=?';
+    pool.query(query,[cat_id],(err,result)=>{
+        if (err) {
+            console.error(err);
+            return res.status(500).json({ error: 'Failed to show mcqs' });
+        }
+
+        // Assuming you have the result
+        res.status(200).json(result); 
+    })
+})
+
+app.get('/tutorgetmcqs/:id',auth,(req,res)=>{
+    const tutor_id=req.params.id
+    const query='select * from t_mcqs where tutor_id=?';
+    pool.query(query,[tutor_id],(err,result)=>{
+        if (err) {
+            console.error(err);
+            return res.status(500).json({ error: 'Failed to show mcqs' });
+        }
+
+        // Assuming you have the result
+        res.status(200).json(result); 
+    })
+})
+
+
+app.post('/marking',auth,(req,res)=>{
+    const {	selectedOpt, score,mcqs_id,category_id}=req.body;
+    const id = req.user.id
+    try{
+        const sql='INSERT INTO mcqschecker (selectedOpt, score ,user_id,mcqs_id,category_id) values (?,?,?,?,?)';
+        const values=[selectedOpt, score,id,mcqs_id,category_id];
+
+        pool.query(sql,values,(err,result)=>{
+            if (result) {
+                console.log('Check successfully');
+                return res.status(201).json({ message: 'successfully' });
+            }else{
+                console.error(err);
+                return res.status(500).json({ error: 'failed' });
+            }
+            
+        });
+    }catch (error) {
+            console.error(error);
+            res.status(500).json({ error: 'failedddd' });
+    }
+    
+});
+
+
 
 app.listen(port, () => console.log(`Listening on port ${port}`));
 module.exports = {pool}

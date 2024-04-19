@@ -8,13 +8,14 @@
     font-family: 'Poppins', sans-serif;
 }
 body{
-    background: url("bg11.jpg");
+    background: url("../Images/bg11.jpg");
     background-size: cover;
     background-repeat: no-repeat;
     background-attachment: fixed;
     overflow: hidden;
     background-position: center bottom;
     backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(5px);
 }
 .wrapper{
     display: flex;
@@ -122,7 +123,7 @@ header{
     color: #fff;
     font-size: 30px;
     text-align: center;
-    padding: 10px 0 30px 0;
+    padding: 10px 0 5px 0;
 }
 .two-forms{
     display: flex;
@@ -188,10 +189,24 @@ header{
     text-decoration: underline;
 }
 @media only screen and (max-width: 786px){
-    
+    .nav-button{
+        display: none;
+    }
     .nav-menu.responsive{
         top: 100px;
     }
+    .nav-logo {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+        padding: 5px;
+        margin-top: 20px;
+        height: 30px;
+    }
+      .nav-logo p{
+        font-size: 13px;
+      }
     .nav-menu{
         position: absolute;
         top: -800px;
@@ -203,29 +218,17 @@ header{
         backdrop-filter: blur(20px);
         transition: .3s;
     }
-    .nav-logo{
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        width: 100%;
-        padding: 5px;
-        margin-top: 33px;
-        height: 30px;
-      }
-      .nav-logo p{
-        font-size: 13px;
-      }
-      .button-group {
+    .nav-menu ul{
+        flex-direction: column;
+        text-align: center;
+    }
+    .button-group {
         display: flex;
         flex-direction: row;
         align-items: center;
         justify-content: center;
         margin-top: 10px;
         gap: 10px;
-    }
-    .nav-menu ul{
-        flex-direction: column;
-        text-align: center;
     }
     .nav-menu-btn{
         display: block;
@@ -252,8 +255,8 @@ header{
     }
     .form-box{
         width: 100%;
-        height: 500px;
-        margin-top: 70px;
+        height: 600px;
+        margin-top: 80px;
     }
     .register-container, .login-container{
         width: 100%;
@@ -263,4 +266,4 @@ header{
         flex-direction: column;
         gap: 0;
     }
-}   
+}

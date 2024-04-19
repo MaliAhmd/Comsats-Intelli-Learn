@@ -20,14 +20,15 @@ const getTutorData = async () => {
         }
 
         const res = await response.json();
-        document.querySelector('.tutor-namee').value = res[0].tutor_name
-        document.querySelector('.tutor-emaill').value = res[0].tutor_email
+        
+        // document.querySelector('.tutor-namee').value = res[0].tutor_name
+        // document.querySelector('.tutor-emaill').value = res[0].tutor_email
         document.querySelector('.tutor-name').value = res[0].tutor_name
         document.querySelector('.tutor-email').value = res[0].tutor_email
         
-        document.querySelector(".user_name").innerHTML = res[0].tutor_name
-        document.querySelector(".user_email").innerHTML = res[0].tutor_email
-
+        // document.querySelector(".user_name").innerHTML = res[0].tutor_name
+        // document.querySelector(".user_email").innerHTML = res[0].tutor_email
+        
     } catch (error) {
         console.error('Error fetching tutor data:', error);
     }
@@ -53,7 +54,8 @@ const getTutorVerifyDetails = async () => {
         }
 
         const res = await response.json();
-        console.log(res[0].t_image)
+        
+        console.log(res)
         const date = res[0].birthday
         const img = `../documents/undefined/${res[0].t_image}`
         document.querySelector('.profileImage').src = img

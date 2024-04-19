@@ -8,6 +8,7 @@ const cors = require('cors')
 const multer = require('multer');
 const path = require('path');
 const fs = require('fs');
+const { log } = require('console');
 
 
 module.exports = (app) =>{
@@ -24,6 +25,9 @@ module.exports = (app) =>{
         credentials:true,   
     }));
     app.use('/documents', express.static(path.join(__dirname, 'public/documents')));
+    app.use('/tutorcourses', express.static(path.join(__dirname, 'public/tutorcourses')));
+    app.use('/public', express.static(path.join(__dirname, 'public')));
+
 app.post('/tutor-register', async (req, res) => {
     const { tutor_name, tutor_subject, tutor_email, tutor_password } = req.body;
 
@@ -52,7 +56,7 @@ app.post('/tutor-register', async (req, res) => {
                 return res.status(500).json({ error: 'Registration failed' });
             }
             console.log('Tutor registered successfully');
-            res.redirect('/public/tutor/t_index.html');
+            res.redirect('/public/tutor/Frontend/t_index.html');
         });
     } catch (error) {
         console.error(error);
@@ -221,82 +225,6 @@ app.get('/fetchTutorverifyinfo',auth, (req, res) => {
     });
 });
 
-// app.get('/getFiles/:id',auth,(req,res)=>{
-//     const id = req.params.id
-//     const query = 'SELECT * FROM verifytutor WHERE tutorId = ?'
-//     tutorPool.query(query,[id],(err, results) => {
-//         if (err) {
-//             console.error('Error fetching tutor verify data:', err);
-//             res.status(500).json({ error: 'Error fetching tutor verify data' });
-//             return;
-//         }
-//         console.log(results)
-//         res.json(results);
-//     });
-// })
-
-// app.get('/getFiles/:id', auth, (req, res) => {
-//     // const id = req.user.id;
-//     const id = req.params.id;
-//     const query = 'SELECT bio, birthday, country, phone_no, resume_file, matrix_file, intermediate_file, bachelors_file FROM verifytutor WHERE tutorId = ?';
-
-//     tutorPool.query(query, [id], (err, results) => {
-//         if (err) {
-//             console.error('Error fetching tutor verify data:', err);
-//             res.status(500).json({ error: 'Error fetching tutor verify data' });
-//             return;
-//         }
-
-//         // Assuming results is an array containing the fetched data
-//         if (results.length > 0) {
-//             const tutorData = results[0]; // Considering only the first row
-
-//             // Read file paths from the database query results
-//             const resumeFilePath = path.join(__dirname, `public/documents/${req.user.email}/${tutorData.resume_file}`);
-//             // const resumeFilePath = tutorData.resume_file;
-//             const matrixFilePath = path.join(__dirname, `public/documents/${req.user.email}/${tutorData.matrix_file}`);
-//             // const matrixFilePath = tutorData.matrix_file;
-//             const intermediateFilePath = path.join(__dirname, `public/documents/${req.user.email}/${tutorData.intermediate_file}`);
-//             // const intermediateFilePath = tutorData.intermediate_file;
-//             const bachelorsFilePath = path.join(__dirname, `public/documents/${req.user.email}/${tutorData.bachelors_file}`);
-
-//             // const bachelorsFilePath = tutorData.bachelors_file;
-
-//             // Read file contents and send as response
-//             const filesToSend = {};
-
-//             // Read and send each file asynchronously
-//             function readFileAndSend(filePath, fileName) {
-//                 fs.readFile(filePath, (err, fileData) => {
-//                     if (err) {
-//                         console.error(`Error reading file ${fileName}:`, err);
-//                         filesToSend[fileName] = null;
-//                     } else {
-//                         filesToSend[fileName] = fileData;
-//                     }
-
-//                     // Check if all files have been read
-//                     if (
-//                         filesToSend.resume &&
-//                         filesToSend.matrix &&
-//                         filesToSend.intermediate &&
-//                         filesToSend.bachelors
-//                     ) {
-//                         res.json(filesToSend); // Send all files as a response
-//                     }
-//                 });
-//             }
-
-//             // Read and send each file
-//             readFileAndSend(resumeFilePath, 'resume');
-//             readFileAndSend(matrixFilePath, 'matrix');
-//             readFileAndSend(intermediateFilePath, 'intermediate');
-//             readFileAndSend(bachelorsFilePath, 'bachelors');
-//         } else {
-//             res.status(404).json({ error: 'Tutor data not found' });
-//         }
-//     });
-// });
 
 
 app.get('/showstudenttotutor/:id',auth, (req, res) => {
@@ -354,29 +282,123 @@ app.get('/tutorDetails',auth, (req, res) => {
     });
 });
 
+
+    app.post('/tutorcreatemcqs',auth,(req,res)=>{
+        const {t_question,t_optA,t_optB,t_optC,t_optD,t_Correctopt,tutor_id}=req.body;
+        if(!t_question || !t_optA || !t_optB || !t_optC || !t_optD || !t_Correctopt || !tutor_id){
+            return res.status(400).json({error: 'All fields are required'});
+        }
+        const sql='INSERT INTO t_mcqs (t_question,t_optA,t_optB,t_optC,t_optD,t_correctedopt,tutor_id) VALUES (?,?,?,?,?,?,?)';
+        const values=[t_question,t_optA,t_optB,t_optC,t_optD,t_Correctopt,tutor_id];
+        tutorPool.query(sql,values,(err,result)=>{
+            if(err){
+                console.error("Error to store in database",err);
+                res.status(500).json({error:"Error to store"});
+                return;
+            }
+            res.json({message: 'Successfully store in database'});
+
+        });
+    });
+
+
+    const storagee = multer.diskStorage({
+        destination: async function (req, file, cb) {
+            try {
+                // const getEmailSql = 'SELECT tutor_email FROM tutor WHERE id = ?';
+                // const [rows, fields] = await tutorPool.promise().query(getEmailSql, [req.body.tutor_id]);
+                // const TutorEmail = await rows[0]?.tutor_email;
+                // console.log(rows);
+                const tutorEmail = req.body.tutor_email;// Get tutor's email from the request
+                console.log(req.body); 
+                const uploadPath = `./public/tutorcourses/${tutorEmail}`;
+                // Create folder if it doesn't exist
+                if (!fs.existsSync(uploadPath)) {
+                    fs.mkdirSync(uploadPath, { recursive: true });
+                }
+                cb(null, uploadPath);
+            } catch (err) {
+                console.error('Error retrieving tutor email:', err);
+                cb(err);
+            }
+        },
+        filename: function (req, file, cb) {
+            cb(null, file.originalname);
+        }
+    });
+    
+
+
+    
+    const uploadd = multer({ storage: storagee });
+    
+    app.post('/tutorcourse',auth, uploadd.single('course'), (req, res) => {
+        const { title,tutor_id,tutor_email,format} = req.body;
+        const coursePath = req.file.path;
+        let curse = coursePath.split(`\\`).pop()
+        // Insert the video details into the database
+        const sql = 'INSERT INTO tutorcourse (title, course, tutor_id, format) VALUES (?, ?, ?, ?)';
+        tutorPool.query(sql, [title, curse, tutor_id,format], (err, result) => {
+            if (err) {
+                console.error('Error inserting video:', err);
+                res.status(500).send('Error uploading video');
+                return;
+            }
+
+           
+            
+            // Send the tutor's email along with the response
+            // const tutorEmail = getEmailResult[0].tutor_email;
+            res.send({mes:`Video uploaded successfully! `});
+            
+        });
+        });
+    
+
+    app.get('/tutorcourseget/:id',auth,(req,res)=>{
+      
+        const id = req.params.id;
+        const format = req.query.format; // Assuming you pass 'video' or 'file' as a query parameter
+    
+        let query = 'SELECT * FROM tutorcourse WHERE tutor_id = ?';
+        const params = [id];
+    
+        if (format) {
+            query += ' AND format = ?';
+            params.push(format);
+        }
+    
+        tutorPool.query(query, params, (err, result) => {
+            if (err) {
+                console.error(err);
+                return res.status(500).json({ error: 'Failed to show tutorcourse' });
+            }
+    
+            //      
+
+            // Set appropriate content type based on format
+        let contentType;
+        if (format === 'video') {
+            contentType = 'video/mp4'; // Adjust this based on your video format
+        } else if (format === 'file') {
+            contentType = 'application/octet-stream'; // Adjust this based on your file type
+        }
+
+        // Set headers
+        res.setHeader('Content-Disposition', 'inline');
+        res.setHeader('Content-Type', contentType);
+
+        // Send the data
+        res.send(result);
+        });
+    });
+
 }
 
 
 
 
 
-
-// app.get('/documents/:tutorEmail/:filename', (req, res) => {
-//     const tutorEmail = req.params.tutorEmail;
-//     const filename = req.params.filename;
-//     const filePath = path.join(__dirname, `public/documents/${tutorEmail}/${filename}`);
-
-//     // Check if the file exists
-//     fs.access(filePath, fs.constants.F_OK, (err) => {
-//         if (err) {
-//             console.error('File does not exist:', err);
-//             return res.status(404).json({ error: 'File not found' });
-//         }
-
-//         // If the file exists, serve it
-//         res.sendFile(filePath);
-//     });
-// });
 
 
 

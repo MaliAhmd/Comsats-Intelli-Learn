@@ -51,7 +51,7 @@
             const query = document.getElementById('searchInput').value;
             const apiKey = 'AIzaSyCak-QB3V_wM_pxwpb7edwczafzYmAxsXc'; // Replace with your own API key
             // Words to filter from the search query
-    const wordsToFilter = ["education", "tutorial", "learning","app","development","react","java","c++","c","kotlin","flutter","dart","python","ai","ml","artificial intelligence","machine algorithm","nodejs","expressjs","angular","html","css","javascript","js","vue","mysql","mongodb","database"]; // Add more words as needed
+    const wordsToFilter = ["education", "tutorial", "learning","app","development","react","java","c++","c","kotlin","flutter","dart","python","ai","ml","artificial intelligence","machine algorithm","nodejs","expressjs","angular","html","css","javascript","js","vue","mysql","mongodb","database","programming","fundamental"]; // Add more words as needed
 
     // Function to filter words from the search query
     function filterWords(searchQuery, wordsToFilter) {

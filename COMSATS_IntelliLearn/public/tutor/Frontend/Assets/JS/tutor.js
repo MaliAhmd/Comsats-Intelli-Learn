@@ -39,8 +39,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 Cookies.set("token", `${data.token}`);
                 const tok = Cookies.get('token');
                 if (tok) {
-                    window.location.href = `/tutor/tutor-dashboard.html?id=${id}`;
+                    window.location.href = `/tutor/Frontend/tutor-dashboard.html?id=${id}`;
                     console.log(getdetail)
+                    localStorage.setItem('tutorID', JSON.stringify(data.result[0]));
                     getdetail =  data;
 
                     resolveGetDetail(data);
@@ -68,10 +69,12 @@ document.addEventListener('DOMContentLoaded', function() {
         })
         .then(response => {
             // console.log('Logout request sent successfully');
-            window.location.href = '/public/tutor/t_index.html'; // Redirect after logout
+            localStorage.removeItem('tutorID');
+            window.location.href = '/public/tutor/Frontend/t_index.html'; // Redirect after logout
             toastr.success('in COMSATS Intelli-Learn','Please fill in all fields')
             Cookies.remove('token');
             console.log(response)
+            
         })
         .catch(error => {
             console.error('Error sending logout request:', error);
